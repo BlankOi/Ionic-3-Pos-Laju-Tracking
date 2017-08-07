@@ -1,0 +1,50 @@
+<ion-header>
+
+    <ion-navbar color="primary">
+        <ion-title>Pos Laju Tracking System</ion-title>
+        <ion-buttons end>
+            <button ion-button icon-right large (click)="about()">
+              <ion-icon name="heart" color="light"></ion-icon>
+              <!-- info -->
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+
+</ion-header>
+
+
+<ion-content class="bg">
+    <ion-list>
+        <ion-item-sliding *ngFor="let data of trackNum">
+
+
+            <ion-item (tap)="trackDetail(data)">
+                <ion-avatar item-start>
+                    <img src="https://image.flaticon.com/icons/svg/46/46021.svg">
+                </ion-avatar>
+                <h2>{{data}}</h2>
+                <p>Back off man, I'm a scientist.</p>
+            </ion-item>
+            <ion-item-options>
+
+                <button ion-button color="danger" expandable icon-start (tap)="delete(data)">
+                  <ion-icon name="text"></ion-icon>
+                  Delete
+                </button>
+
+            </ion-item-options>
+
+        </ion-item-sliding>
+    </ion-list>
+
+    <!-- <ion-list padding>
+        <ion-item *ngFor="let data of trackNum" (click)="trackDetail(data)">
+            {{data}}
+        </ion-item>
+    </ion-list> -->
+
+
+    <ion-fab right bottom>
+        <button ion-fab color="secondary" (click)="addTracking()"><ion-icon name="add"></ion-icon></button>
+    </ion-fab>
+</ion-content>

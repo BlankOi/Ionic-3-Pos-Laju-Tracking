@@ -1,14 +1,54 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>
-      Ionic Blank
-    </ion-title>
-  </ion-navbar>
+    <ion-navbar color="primary">
+        <ion-title>
+            Add Shipment
+        </ion-title>
+
+    </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+<ion-content class="bg">
+    <div class="header-content">
+        <div class="header-img">
+            <img src="assets/bground.jpg" alt="bground">
+        </div>
+        <ion-row>
+
+        </ion-row>
+        <ion-row>
+            <ion-col col-12>
+                <ion-item>
+                    <ion-label>
+                        <ion-icon name="barcode"></ion-icon>
+                    </ion-label>
+
+                    <ion-input type="text" placeholder="Tracking Number" [(ngModel)]="trackingNum"></ion-input>
+
+
+                    <button ion-button clear (click)="scan()" item-right>
+                     <ion-icon name="camera"></ion-icon>
+                </button>
+                </ion-item>
+                <ion-item class="title-place">
+                    <ion-input type="text" placeholder="Title (Recommended)" [(ngModel)]="title"></ion-input>
+                </ion-item>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+
+        </ion-row>
+        <ion-row>
+            <ion-col col-12> <button ion-button block (click)="getTracking()" color="secondary">Track</button></ion-col>
+            <!-- <ion-col col-6>
+                <button ion-button block (click)="reset()" color="danger">Reset</button>
+            </ion-col> -->
+
+        </ion-row>
+    </div>
+    <div class="footer-img">
+        <img src="assets/bottom.jpg" alt="footer">
+    </div>
+
+
+
 </ion-content>

@@ -3,28 +3,40 @@ import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
+import { HttpModule } from '@angular/http';
 
 import { MyApp } from './app.component';
-import { HomePage } from '../pages/home/home';
+import { MainPage } from './../pages/main/main';
 
+import { PosApiProvider } from './../providers/pos-api/pos-api';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner';
+import { IonicStorageModule } from '@ionic/storage';
 @NgModule({
   declarations: [
     MyApp,
-    HomePage
+    MainPage,
+
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    HttpModule,
+    IonicModule.forRoot(MyApp, {
+      scrollAssist: false,    // Valid options appear to be [true, false]
+      autoFocusAssist: false  // Valid options appear to be ['instant', 'delay', false]
+    }),
+    IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage
+    MainPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
+    PosApiProvider,
+    BarcodeScanner
   ]
 })
 export class AppModule {}

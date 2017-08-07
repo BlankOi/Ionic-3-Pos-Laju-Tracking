@@ -1,0 +1,63 @@
+<ion-header>
+
+    <ion-navbar color="primary" hideBackButton="true">
+        <ion-title>Delivery Status</ion-title>
+        <!-- <ion-buttons end>
+            <button ion-button icon-left clear large (click)="home()">
+              <ion-icon name="home"></ion-icon>
+               info 
+            </button>
+        </ion-buttons> -->
+    </ion-navbar>
+
+</ion-header>
+
+
+<ion-content parallax-header no-bounce class="bg">
+    <div class="header-image">
+        <div class="row" text-center>
+
+        </div>
+    </div>
+    <div class="trackDetail">
+        <ion-list padding>
+            <ion-item>
+                <ion-avatar item-start>
+                    <img src="assets/Delivery-Icon.png">
+                </ion-avatar>
+                <h2>Jam</h2>
+                <p>Tracking Number</p>
+                <h2>{{trackNum}}</h2>
+            </ion-item>
+        </ion-list>
+
+
+
+    </div>
+    <div class="main-content">
+        <ion-card *ngFor="let pos of dataPos" class="overlap">
+            <ion-card-header>
+                <b> {{pos.process}}</b>
+            </ion-card-header>
+            <ion-card-content>
+
+                <ion-chip>
+                    <ion-icon name="pin"></ion-icon>
+                    <ion-label><b>{{pos.location}}</b></ion-label>
+                </ion-chip>
+                <div class="date">
+                    <ion-icon name="time"></ion-icon>
+
+                    <span>{{pos.date}}</span>
+                </div>
+            </ion-card-content>
+        </ion-card>
+    </div>
+    <div class="home">
+        <button ion-button round full color="primary" (click)="home()"> 
+            <ion-icon name="home">
+                Home
+            </ion-icon>
+        </button>
+    </div>
+</ion-content>
