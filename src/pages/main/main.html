@@ -28,19 +28,17 @@
         <ion-item-sliding *ngFor="let data of displayItem;">
             <ion-item (tap)="trackDetail(data)" detail-push>
                 <ion-avatar item-start>
-                    <img src="https://image.flaticon.com/icons/svg/46/46021.svg">
+                    <img src="assets/delivery-package-opened.png">
                 </ion-avatar>
-                <h2 class="title"><b>{{data.title}}</b></h2>
+                <h2 class="title">
+                    <ion-icon name="checkmark-circle" color="secondary"></ion-icon> <b>{{data.title}}</b></h2>
                 <p>{{data.trackingNum}}</p>
 
-                <p>
-                    <ion-icon name="checkmark-circle" color="secondary"></ion-icon>
-                    {{data.latestStatus}}
-                </p>
+
             </ion-item>
             <ion-item-options>
                 <button ion-button color="danger" expandable icon-start (tap)="delete(i)">
-                  <ion-icon name="text"></ion-icon>
+                  <ion-icon name="trash"></ion-icon>
                   Delete
                 </button>
             </ion-item-options>

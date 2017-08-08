@@ -122,15 +122,12 @@ export class MainPage {
   // loader end
   displayItem=[];
 
-  storedata: { title: string, trackingNum: string, latestStatus: string };
+  storedata: { title: string, trackingNum: string};
   ionViewDidLoad() {
     this.dataProvider.getData().then((result) => {
       // console.log(result);
       //change page to hasData true
-      if (result.length>0) {
-        // console.log(this.storedata);
-        this.hasData = true;
-      }
+
 
 
       for (var key in result) {
@@ -139,8 +136,13 @@ export class MainPage {
           this.storedata = {
               title:result[key].title,
               trackingNum: result[key].trackingNum,
-              latestStatus: result[key].data[0].process
+              // latestStatus: result[key]
           }
+          if (this.storedata) {
+              console.log(this.storedata);
+            this.hasData = true;
+          }
+
           this.displayItem.push(this.storedata);
           // console.log(this.displayItem);
         }

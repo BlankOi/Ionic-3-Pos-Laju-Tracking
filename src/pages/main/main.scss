@@ -14,7 +14,8 @@
             box-shadow: 0px 0px 6px 0px rgba(50, 50, 50, 0.75);
         }
         .title {
-            color: color($colors, primary)
+            padding-top: 3px;
+            // color: color($colors, primary)
         }
         .img-lori {
             img {
