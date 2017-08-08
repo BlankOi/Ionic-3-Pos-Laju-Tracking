@@ -8,7 +8,7 @@ page-trackprogress {
         z-index: -1;
     }
     .row {
-        background: rgba(0, 0, 0, 0.55);
+        background: rgba(0, 0, 0, 0.70);
         overflow: hidden;
         height: 100%;
         z-index: 2;
@@ -21,14 +21,14 @@ page-trackprogress {
     }
     .trackDetail {
         text-align: center;
-        margin-top: -150px;
-        margin-bottom: 50px;
+        margin-top: -170px;
+        margin-bottom: 40px;
         // border-radius: 5px;
         color: white;
     }
     ion-item {
         p {
-            color: #DCD !important;
+            color: #d3d3d3 !important;
             font-size: 0.7em !important;
         }
         padding-left: 16px;
@@ -42,13 +42,13 @@ page-trackprogress {
     }
     .overlap {
         margin-top: -30px;
-        margin-bottom: 35px;
+        margin-bottom: 40px;
         border-radius: 5px;
         background-color: white;
     }
-    .card_header {
-        background: #5CB5B3;
-        color: #fff;
+    .text-header {
+        color: color($colors, primary);
+        margin-bottom: 10px;
     }
     .chip-md {
         border-radius: 16px;
@@ -60,7 +60,9 @@ page-trackprogress {
         margin: 0px 0 10px 0;
     }
     .date {
+        // margin-top: px;
         margin-left: 20px;
+        color: #2A2A2A;
     }
     .home {
         position: fixed;

@@ -11,6 +11,10 @@ import { MainPage } from './../pages/main/main';
 import { PosApiProvider } from './../providers/pos-api/pos-api';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { IonicStorageModule } from '@ionic/storage';
+import { SocialSharing } from '@ionic-native/social-sharing';
+import { EmailComposer } from '@ionic-native/email-composer';
+import { DataProvider } from '../providers/data/data';
+
 @NgModule({
   declarations: [
     MyApp,
@@ -20,10 +24,7 @@ import { IonicStorageModule } from '@ionic/storage';
   imports: [
     BrowserModule,
     HttpModule,
-    IonicModule.forRoot(MyApp, {
-      scrollAssist: false,    // Valid options appear to be [true, false]
-      autoFocusAssist: false  // Valid options appear to be ['instant', 'delay', false]
-    }),
+    IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
@@ -36,7 +37,11 @@ import { IonicStorageModule } from '@ionic/storage';
     SplashScreen,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     PosApiProvider,
-    BarcodeScanner
+    BarcodeScanner,
+    SocialSharing,
+    EmailComposer,
+    DataProvider
+
   ]
 })
 export class AppModule {}

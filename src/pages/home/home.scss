@@ -1,7 +1,13 @@
     page-home {
         .header-img {
-            width: 100%;
-            margin-top: 50px;
+            background-image: url(../asset/orang.png);
+            background-size: cover;
+            background-position: center;
+            height: 50vw;
+            // width: 90%;
+            position: relative;
+            margin-top: 10px;
+            padding: 10px;
         }
         .header-content {
             position: absolute;
@@ -10,7 +16,7 @@
             // height: 100%;
             padding: 5px 10px 5px 10px;
             color: #fff;
-            background-color: #F57B6C;
+            // background-color: #F57B6C;
             // background-image: linear-gradient(19deg, #21D4FD 0%, #B721FF 100%);
         }
         .footer-img {

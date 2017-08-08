@@ -2,32 +2,34 @@
 
     <ion-navbar color="primary" hideBackButton="true">
         <ion-title>Delivery Status</ion-title>
-        <!-- <ion-buttons end>
-            <button ion-button icon-left clear large (click)="home()">
-              <ion-icon name="home"></ion-icon>
-               info 
+        <ion-buttons end>
+            <button ion-button icon-right large (click)="share()">
+              <ion-icon name="share" color="light"></ion-icon>
             </button>
-        </ion-buttons> -->
+        </ion-buttons>
     </ion-navbar>
 
 </ion-header>
 
 
-<ion-content parallax-header no-bounce class="bg">
+<ion-content parallax-header no-bounce class="bg2">
     <div class="header-image">
         <div class="row" text-center>
 
         </div>
     </div>
     <div class="trackDetail">
-        <ion-list padding>
+        <ion-list padding text-nowrap>
+
             <ion-item>
-                <ion-avatar item-start>
+                <ion-thumbnail item-left>
                     <img src="assets/Delivery-Icon.png">
-                </ion-avatar>
-                <h2>Jam</h2>
+                </ion-thumbnail>
+                <h2>Title: <b>{{title}}</b></h2>
                 <p>Tracking Number</p>
                 <h2>{{trackNum}}</h2>
+                <h2>
+                    <ion-icon name="checkmark-circle" color="secondary"></ion-icon> {{lastItem}}</h2>
             </ion-item>
         </ion-list>
 
@@ -35,18 +37,18 @@
 
     </div>
     <div class="main-content">
-        <ion-card *ngFor="let pos of dataPos" class="overlap">
-            <ion-card-header>
-                <b> {{pos.process}}</b>
-            </ion-card-header>
-            <ion-card-content>
+        <ion-card *ngFor="let pos of dataPos " class="overlap">
+            <!-- <ion-card-header color="primary">
 
+            </ion-card-header> -->
+            <ion-card-content>
+                <p color="primary" class="text-header"><b> {{pos.process}}</b></p>
                 <ion-chip>
                     <ion-icon name="pin"></ion-icon>
                     <ion-label><b>{{pos.location}}</b></ion-label>
                 </ion-chip>
                 <div class="date">
-                    <ion-icon name="time"></ion-icon>
+                    <!-- <ion-icon name="time"></ion-icon> -->
 
                     <span>{{pos.date}}</span>
                 </div>
@@ -54,7 +56,7 @@
         </ion-card>
     </div>
     <div class="home">
-        <button ion-button round full color="primary" (click)="home()"> 
+        <button ion-button round full color="secondary" (click)="home()"> 
             <ion-icon name="home">
                 Home
             </ion-icon>

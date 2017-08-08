@@ -1,3 +1,37 @@
-page-main {
-
-}
+    page-main {
+        .nodata {
+            height: 100%;
+            background: map($colors, primary);
+            position: absolute;
+            z-index: 1;
+        }
+        ion-item-sliding {
+            position: relative;
+            display: block;
+            overflow: hidden;
+            width: 100%;
+            margin-top: 10px;
+            box-shadow: 0px 0px 6px 0px rgba(50, 50, 50, 0.75);
+        }
+        .title {
+            color: color($colors, primary)
+        }
+        .img-lori {
+            img {
+                margin-top: 40%;
+                width: 20%;
+            }
+            p {
+                color: #fff;
+                margin: 0 30px 5px 30px;
+            }
+            h2 {
+                color: #fff;
+                padding: 10px;
+            }
+        }
+        .footer-img {
+            bottom: 0;
+            position: fixed;
+        }
+    }

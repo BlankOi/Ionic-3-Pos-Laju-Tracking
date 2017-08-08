@@ -1,3 +1,5 @@
+import { DataProvider } from './../../providers/data/data';
+import { TrackprogressPage } from './../trackprogress/trackprogress';
 import { PosApiProvider } from './../../providers/pos-api/pos-api';
 import { Storage } from '@ionic/storage';
 import { Component } from '@angular/core';
@@ -10,18 +12,30 @@ import { IonicPage, NavController, NavParams, AlertController, ModalController, 
   templateUrl: 'main.html',
 })
 export class MainPage {
-  value: any;
-  public posData = [];
-  public latestStatus: string;
-  // arr: any;
 
-    public trackNum: any = [];
-    constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage, public pos: PosApiProvider, public alertCtrl: AlertController, public modalCtrl: ModalController, public loadingCtrl: LoadingController) {
-  }
-    showConfirm() {
+  //nak check ada data ke xde, kalau xde, show div xde data
+  public hasData: boolean=false;
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage, public pos: PosApiProvider, public alertCtrl: AlertController, public modalCtrl: ModalController, public loadingCtrl: LoadingController, public dataProvider: DataProvider) {
+  
+    }
+  
+  //pull to refresh start
+    doRefresh(refresher) {
+      console.log('Begin async operation', refresher);
+      this.navCtrl.setRoot(this.navCtrl.getActive().component);
+
+      setTimeout(() => {
+        console.log('Async operation has ended');
+        refresher.complete();
+      }, 2000);
+    }
+  //pull to refresh end
+
+  //show delete confirmation
+    showConfirm(index) {
       let confirm = this.alertCtrl.create({
-        title: 'Use this lightsaber?',
-        message: 'Do you agree to use this lightsaber to do good across the intergalactic galaxy?',
+        title: 'Are your sure want to delete?',
         buttons: [
           {
             text: 'No',
@@ -33,17 +47,19 @@ export class MainPage {
             text: 'Yes',
             handler: () => {
               console.log('Agree clicked');
-             
-              this.storage.remove(this.value).then(() => {
+              this.dataProvider.delete(index);
+
+              // this.storage.remove(trackingNum).then(() => {
                 this.navCtrl.setRoot(this.navCtrl.getActive().component);
                 
-              });
+              // });
             }
           }]
       })
       confirm.present();
     }
-  
+  //show delete confirmation end
+
     //code 204
     showPrompt() {
       let prompt = this.alertCtrl.create({
@@ -66,8 +82,8 @@ export class MainPage {
     //code 504
     showPrompt2() {
       let prompt = this.alertCtrl.create({
-        title: 'Maaf, Server SPR terlalu perlahan.',
-        message: "Server SPR mengalami gangguan, sila cuba sebentar lagi.",
+        title: 'Sorry, Server usage is too high.',
+        message: "Please try again later.",
 
         buttons: [
           {
@@ -82,14 +98,6 @@ export class MainPage {
       prompt.present();
     }
   //error 504
-  ionViewDidLoad() {
-    
-    // this.storage.clear();
-    this.storage.forEach((value) => {
-      // console.log(value);
-      this.trackNum.push(value);
-    });   
-  }
 
   addTracking() {
     this.navCtrl.push('HomePage');
@@ -97,7 +105,6 @@ export class MainPage {
 
   //loader start 
   public loader;
-
   showLoading() {
     if (!this.loader) {
       this.loader = this.loadingCtrl.create({
@@ -113,46 +120,74 @@ export class MainPage {
     }
   }
   // loader end
-  trackDetail(value) {
-    //send data to new HomePage
-    console.log(value);
-    this.showLoading();
+  displayItem=[];
 
-    this.pos.getDetail(value).subscribe(result => {
+  storedata: { title: string, trackingNum: string, latestStatus: string };
+  ionViewDidLoad() {
+    this.dataProvider.getData().then((result) => {
+      // console.log(result);
+      //change page to hasData true
+      if (result.length>0) {
+        // console.log(this.storedata);
+        this.hasData = true;
+      }
+
+
+      for (var key in result) {
+        if (result.hasOwnProperty(key)) {
+          //store dalam storedata object
+          this.storedata = {
+              title:result[key].title,
+              trackingNum: result[key].trackingNum,
+              latestStatus: result[key].data[0].process
+          }
+          this.displayItem.push(this.storedata);
+          // console.log(this.displayItem);
+        }
+      }
+
+    })
+
+ 
+  }
+
+  //value kat sini datang dari html sana, pass value untuk setiap row
+  //array of semua data
+  public posData = [];
+  //declare dataObject
+  public dataObj: { title: string; trackingNum: string; data: any[]; };
+  trackDetail(value) {
+    this.showLoading();
+    this.pos.getDetail(value.trackingNum).subscribe(result => {
       // nak amik data je
       for (var key in result.data) {
         if (result.data.hasOwnProperty(key)) {
           this.posData.push(result.data[key]);
         }
       }
-
-      //nak amik latest status
-      this.latestStatus = this.posData[0];
-      console.log(this.latestStatus);
-      
+      //store semua dalm object
+      this.dataObj = {
+        title: value.title,
+        trackingNum: value.trackingNum,
+        data: this.posData,
+      }
       //nak check code ,204 error, 200 ok, 504 "Server SPR terlalu perlahan."
       if (result.code == 200) {
-        this.navCtrl.push('TrackprogressPage', { 'posData': this.posData,'trackNum':value });
-        this.loader.dismiss();
-        } else if  (result.code == 204) {
+        this.dismissLoading();
+        //send data to TrackprogressPage with dataObj
+        this.navCtrl.push('TrackprogressPage', { 'dataObj': this.dataObj });
+      } if (result.code == 204) {
         this.showPrompt();
-      } else if (result.code == 504) {
+      } if (result.code == 504) {
         this.showPrompt2();
-      } else {
-        console.log("Code Error", result.code);
       }
-
-      
-      
     })
-
-   
   }
 
-  delete(value) {
-    this.value = value;
-    console.log(value);
-    this.showConfirm();
+  delete(index) {
+    // this.value = ;
+    // console.log(index);
+    this.showConfirm(index);
   }
 
   about() {
