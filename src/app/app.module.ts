@@ -6,7 +6,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { HttpModule } from '@angular/http';
 
 import { MyApp } from './app.component';
-import { MainPage } from './../pages/main/main';
+// import { MainPage } from './../pages/main/main';
 
 import { PosApiProvider } from './../providers/pos-api/pos-api';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
@@ -18,7 +18,7 @@ import { DataProvider } from '../providers/data/data';
 @NgModule({
   declarations: [
     MyApp,
-    MainPage,
+    // MainPage,
 
   ],
   imports: [
@@ -30,7 +30,7 @@ import { DataProvider } from '../providers/data/data';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    MainPage
+    // MainPage
   ],
   providers: [
     StatusBar,

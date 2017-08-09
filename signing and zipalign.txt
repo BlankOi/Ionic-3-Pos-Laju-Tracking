@@ -1,0 +1,9 @@
+ keytool -genkey -v -keystore mazlan-pos.keystore -alias mazlan -keyalg RSA -keysize 2048 -validity 10000
+
+
+
+
+jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore mazlan-pos.keystore p-u.apk mazlan
+
+
+zipalign -v 4 p-u.apk PosLajuTrackingBeta.apk
