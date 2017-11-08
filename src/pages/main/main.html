@@ -1,13 +1,15 @@
 <ion-header>
 
     <ion-navbar color="primary">
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
         <ion-title>Pos Laju Tracking System</ion-title>
-        <ion-buttons end>
+        <!-- <ion-buttons end>
             <button ion-button icon-right large (click)="about()">
               <ion-icon name="heart" color="light"></ion-icon>
-              <!-- info -->
             </button>
-        </ion-buttons>
+        </ion-buttons> -->
     </ion-navbar>
 
 </ion-header>
@@ -25,7 +27,7 @@
         </div>
     </div>
     <ion-list padding no-lines>
-        <ion-item-sliding *ngFor="let data of displayItem;">
+        <ion-item-sliding *ngFor="let data of displayItem;  let i = index">
             <ion-item (tap)="trackDetail(data)" detail-push>
                 <ion-avatar item-start>
                     <img src="assets/delivery-package-opened.png">
@@ -37,7 +39,7 @@
 
             </ion-item>
             <ion-item-options>
-                <button ion-button color="danger" expandable icon-start (tap)="delete(i)">
+                <button ion-button color="danger" expandable icon-start (tap)="delete(i,data.title)">
                   <ion-icon name="trash"></ion-icon>
                   Delete
                 </button>

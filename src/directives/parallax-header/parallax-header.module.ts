@@ -1,4 +1,4 @@
-import { IonicModule } from 'ionic-angular';
+// import { IonicModule } from 'ionic-angular';
 import { ParallaxHeaderDirective } from './parallax-header';
 import { NgModule } from '@angular/core';
 @NgModule({

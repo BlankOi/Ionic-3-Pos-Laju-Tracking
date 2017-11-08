@@ -1,5 +1,5 @@
 <ion-content class="bg2">
-    <ion-card text-center>
+    <ion-card text-center class="wrap">
         <ion-buttons end>
             <button ion-button clear icon-left (click)="dismiss()" large color="danger"> 
         <ion-icon name="close"></ion-icon>
@@ -9,30 +9,19 @@
             <h2><b>Pos Laju Tracking</b></h2>
         </ion-card-header>
 
-
-        <img class="logo" src="assets/poslogo.png" alt="spr">
-
-
-        <p class="info">
-            Pos Laju Tracking is a free app to help users to track Pos Laju Parcel. This is NOT an Official Pos Laju Tracking Apps by Pos Laju Malaysia. But we develop it as a community project for Malaysian. Please refer to Pos Laju Malaysia for more information.
-            Thank you.
-        </p>
-        <hr>
-        <p class="developer">By Mohd Mazlan</p>
-        <p>version 1.0</p><br>
+        <ion-card-content>
+            <img class="logo" src="assets/poslogo.png" alt="spr">
 
 
-        <!-- <ion-row class="contact"> -->
-        <button ion-button color="secondary" (tap)="sendEmail()">Contact</button>
-        <a button ion-button color="secondary" href="https://play.google.com/store/apps/details?id=my.mazlan.myresume">Portfolio</a>
+            <p class="info">
+                Pos Laju Tracking is a free app to help users to track Pos Laju Parcel. This is NOT an Official Pos Laju Tracking Apps by Pos Laju Malaysia. But we develop it as a community project for Malaysian. Please refer to Pos Laju Malaysia for more information.
+                Thank you.
+            </p>
+        </ion-card-content>
+        <!-- <hr> -->
+        <!-- <p class="developer">By Mohd Mazlan</p>
+        <p>version 1.0</p><br> -->
 
-        <!-- </ion-row> -->
-
-
-        <br>
-        <button ion-button clear color="primary" large (tap)="share()">
-                <ion-icon name="share"></ion-icon>
-            </button>
 
 
 

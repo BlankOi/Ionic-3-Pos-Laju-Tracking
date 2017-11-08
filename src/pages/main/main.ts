@@ -1,9 +1,9 @@
 import { DataProvider } from './../../providers/data/data';
-import { TrackprogressPage } from './../trackprogress/trackprogress';
 import { PosApiProvider } from './../../providers/pos-api/pos-api';
 import { Storage } from '@ionic/storage';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, ModalController, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, ModalController, LoadingController, Platform } from 'ionic-angular';
+import { AdMobFreeBannerConfig, AdMobFree } from '@ionic-native/admob-free';
 
 
 @IonicPage()
@@ -16,9 +16,29 @@ export class MainPage {
   //nak check ada data ke xde, kalau xde, show div xde data
   public hasData: boolean=false;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage, public pos: PosApiProvider, public alertCtrl: AlertController, public modalCtrl: ModalController, public loadingCtrl: LoadingController, public dataProvider: DataProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage, public pos: PosApiProvider, public alertCtrl: AlertController, public modalCtrl: ModalController, public loadingCtrl: LoadingController, public dataProvider: DataProvider, public adMobFree: AdMobFree, public platform: Platform) {
   
+  }
+  //ads
+  async showBannerAd() {
+    try {
+      const bannerConfig: AdMobFreeBannerConfig = {
+        id: 'ca-app-pub-8469816531943468/2647073559',
+        isTesting: false,
+        autoShow: true
+        // size:'320x32'
+      }
+
+      this.adMobFree.banner.config(bannerConfig);
+
+      const result = await this.adMobFree.banner.prepare();
+      console.log(result);
     }
+    catch (e) {
+      console.error(e);
+    }
+  }
+//ads end
   
   //pull to refresh start
     doRefresh(refresher) {
@@ -33,9 +53,9 @@ export class MainPage {
   //pull to refresh end
 
   //show delete confirmation
-    showConfirm(index) {
+    showConfirm(index,title) {
       let confirm = this.alertCtrl.create({
-        title: 'Are your sure want to delete?',
+        title: `Are your sure want to delete ${title}?`,
         buttons: [
           {
             text: 'No',
@@ -124,11 +144,15 @@ export class MainPage {
 
   storedata: { title: string, trackingNum: string};
   ionViewDidLoad() {
+
+    // start ads
+    this.platform.ready().then(() => {
+      this.showBannerAd();
+    })
+    // end ads
     this.dataProvider.getData().then((result) => {
       // console.log(result);
       //change page to hasData true
-
-
 
       for (var key in result) {
         if (result.hasOwnProperty(key)) {
@@ -186,10 +210,10 @@ export class MainPage {
     })
   }
 
-  delete(index) {
+  delete(index,title) {
     // this.value = ;
     // console.log(index);
-    this.showConfirm(index);
+    this.showConfirm(index,title);
   }
 
   about() {
