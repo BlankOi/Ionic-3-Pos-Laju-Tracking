@@ -12,43 +12,43 @@
         <div class="header-img">
             <img src="assets/orang.png" alt="bground">
         </div>
-        <ion-row>
 
-        </ion-row>
         <ion-row>
             <ion-col col-12>
                 <ion-item>
                     <ion-label>
                         <ion-icon name="barcode"></ion-icon>
                     </ion-label>
-
                     <ion-input type="text" placeholder="Tracking Number" [(ngModel)]="trackingNum"></ion-input>
-
-
                     <button ion-button clear (click)="scan()" item-right>
-                     <ion-icon name="camera"></ion-icon>
-                </button>
+                        <ion-icon name="camera"></ion-icon>
+                    </button>
                 </ion-item>
                 <ion-item class="title-place">
                     <ion-input type="text" placeholder="Title (Recommended)" [(ngModel)]="title"></ion-input>
+                    <button ion-button (click)="iconSelect()" item-right clear>
+                        <ion-icon name="pricetag"></ion-icon>
+                    </button>
                 </ion-item>
+
+
+                <!-- <ion-label>Toppings</ion-label>
+                    <ion-select [(ngModel)]="icon" interface="action-sheet">
+                        <ion-option value="american-football">american-football</ion-option>
+                        <ion-option value="basket"><ion-icon name="stats"></ion-icon>basket</ion-option>
+                        <ion-option value="build">build</ion-option>
+                        <ion-option value="cafe">cafe</ion-option>
+                        <ion-option value="cart">cart</ion-option>
+                        <ion-option value="desktop">desktop</ion-option>
+                    </ion-select> -->
             </ion-col>
         </ion-row>
-        <ion-row>
 
-        </ion-row>
         <ion-row>
-            <ion-col col-12> <button ion-button block (click)="getTracking()" color="secondary">Track</button></ion-col>
-            <!-- <ion-col col-6>
-                <button ion-button block (click)="reset()" color="danger">Reset</button>
-            </ion-col> -->
+            <ion-col col-12>
+                <button ion-button block (click)="getTracking()" color="secondary" [disabled]="!trackingNum">Track</button>
+            </ion-col>
 
         </ion-row>
     </div>
-    <!-- <div class="footer-img">
-        <img src="assets/bottom.jpg" alt="footer">
-    </div> -->
-
-
-
 </ion-content>

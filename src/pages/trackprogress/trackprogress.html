@@ -38,9 +38,6 @@
     </div>
     <div class="main-content">
         <ion-card *ngFor="let pos of dataPos " class="overlap">
-            <!-- <ion-card-header color="primary">
-
-            </ion-card-header> -->
             <ion-card-content>
                 <p color="primary" class="text-header"><b> {{pos.process}}</b></p>
                 <ion-chip>
@@ -48,15 +45,13 @@
                     <ion-label><b>{{pos.location}}</b></ion-label>
                 </ion-chip>
                 <div class="date">
-                    <!-- <ion-icon name="time"></ion-icon> -->
-
                     <span>{{pos.date}}</span>
                 </div>
             </ion-card-content>
         </ion-card>
     </div>
     <div class="home">
-        <button ion-button round full color="secondary" (click)="home()"> 
+        <button ion-button round full color="secondary" (click)="home()">
             <ion-icon name="home">
                 Home
             </ion-icon>

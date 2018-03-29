@@ -1,6 +1,6 @@
 import { DataProvider } from './../../providers/data/data';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, LoadingController, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, LoadingController, AlertController, ActionSheetController } from 'ionic-angular';
 
 //pos provider
 import { PosApiProvider } from './../../providers/pos-api/pos-api';
@@ -10,6 +10,7 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
 //IonicStorageModule
 import { Storage } from '@ionic/storage';
+import { DeviceFeedback } from '@ionic-native/device-feedback';
 
 @IonicPage()
 @Component({
@@ -17,19 +18,28 @@ import { Storage } from '@ionic/storage';
   templateUrl: 'home.html'
 })
 export class HomePage {
-  dataObj: { title: string; trackingNum: string; data: any[]; code: number; };
+
+  dataObj: {
+    title: string;
+    trackingNum: string;
+    data: any[];
+    code: number;
+    icon: string;
+  };
+
   //declare dataObject
-  dataObjNew= [];
+  dataObjNew = [];
 
   //data dari barcode
   public barCodeData = {};
   //list of tracking status
   public trackingStatus: any[] = [];
-  
+
   //variable untuk store data dari form
   public trackingNum: string;
   public title: string;
   public code: number;
+  public icon: string;
 
 
   constructor(
@@ -39,21 +49,23 @@ export class HomePage {
     public storage: Storage,
     public loadingCtrl: LoadingController,
     public alertCtrl: AlertController,
-    public dataProvider:DataProvider
+    public dataProvider: DataProvider,
+    public haptic: DeviceFeedback,
+    public actionSheetCtrl:ActionSheetController
   ) {
   }
 
 
-  //loader start 
+  //loader start
   public loader;
   showLoading() {
-    if (!this.loader) {
       this.loader = this.loadingCtrl.create({
         content: 'Checking...'
       });
       this.loader.present();
-    }
+    // }
   }
+
   dismissLoading() {
     if (this.loader) {
       this.loader.dismiss();
@@ -104,6 +116,8 @@ export class HomePage {
 
   //BarcodeScanner
   scan() {
+    this.haptic.acoustic()
+
     this.barcode.scan().then((barcodeData) => {
       this.trackingNum = barcodeData.text;
     }, (err) => {
@@ -114,10 +128,12 @@ export class HomePage {
 
   //track button
   getTracking() {
+    this.haptic.acoustic()
+
     this.showLoading();
 
     this.pos.getDetail(this.trackingNum).subscribe(result => {
-      // this.code = result.code;
+      this.code = result.code;
 
       // nak amik key data je (list tracking status) dan save dlm trackingStatus array
       for (var key in result.data) {
@@ -125,27 +141,29 @@ export class HomePage {
           this.trackingStatus.push(result.data[key]);
         }
       }
-      
+
       //store semua dalm object
       this.dataObj = {
         title: this.title,
         trackingNum: this.trackingNum,
         data: this.trackingStatus,
-        code: result.code
+        code: result.code,
+        icon: this.icon
       }
+      console.log('dataObj:', this.dataObj);
 
       //nak check code ,204 error, 200 ok, 504 "Server SPR terlalu perlahan."
       if (result.code == 200) {
         this.dismissLoading();
-        //save dataObj guna key trackingNum, so retrive guna get() 
+        //save dataObj guna key trackingNum, so retrive guna get()
         // this.dataObjNew.push(this.dataObj);
         this.dataProvider.save(this.dataObj);
         // this.storage.set(this.dataObj.trackingNum, this.dataObj);
 
-          //send data to new HomePage
-          this.navCtrl.push('TrackprogressPage', {'dataObj':this.dataObj});
-        
-       
+        //send data to new HomePage
+        this.navCtrl.push('TrackprogressPage', { 'dataObj': this.dataObj });
+
+
       } if (result.code == 204) {
         this.showPrompt();
       } if (result.code == 504) {
@@ -155,7 +173,37 @@ export class HomePage {
   }
 
   reset() {
+    this.haptic.acoustic()
+
     this.trackingStatus = [];
     this.trackingNum = '';
+  }
+
+  iconSelect() {
+    let actionSheet = this.actionSheetCtrl.create({
+      title: "Choose below",
+      buttons: [
+        {
+          text: "Camera",
+          icon: "camera",
+          handler: () => {
+            this.icon = 'basket'
+          }
+        },
+        {
+          text: "Gallery",
+          icon: "photos",
+          handler: () => {
+          }
+        },
+        {
+          text: "Remove avatar",
+          icon: "trash",
+          handler: () => {
+          }
+        }
+      ]
+    });
+    actionSheet.present();
   }
 }

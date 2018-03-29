@@ -25,7 +25,7 @@
         }
         .item-md {
             padding-left: 0;
-            margin-bottom: -15px;
+            // margin-bottom: -15px;
             font-size: 2rem;
             font-weight: normal;
             text-transform: none;
@@ -47,8 +47,13 @@
             font-size: 2rem;
         }
         .title-place {
-            margin-top: 25px;
+            margin-top: 5px;
             margin-bottom: 1px;
             font-size: 1em;
+        }
+        .text-input-md {
+            margin: 0px;
+            padding: 0;
+            width: calc(100% - 8px - 8px);
         }
     }

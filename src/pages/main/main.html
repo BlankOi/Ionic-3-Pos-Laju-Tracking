@@ -5,11 +5,6 @@
             <ion-icon name="menu"></ion-icon>
         </button>
         <ion-title>Pos Laju Tracking System</ion-title>
-        <!-- <ion-buttons end>
-            <button ion-button icon-right large (click)="about()">
-              <ion-icon name="heart" color="light"></ion-icon>
-            </button>
-        </ion-buttons> -->
     </ion-navbar>
 
 </ion-header>
@@ -22,44 +17,34 @@
     <div class="nodata" [hidden]="hasData" text-center>
         <div class="img-lori">
             <img src="assets/lori.png" alt="lori">
-            <h2>You don’t have any shipping record</h2>
+            <h2>No shipping record</h2>
             <p>Tap on the + symbol to get started or pull down to refresh</p>
         </div>
     </div>
     <ion-list padding no-lines>
         <ion-item-sliding *ngFor="let data of displayItem;  let i = index">
             <ion-item (tap)="trackDetail(data)" detail-push>
-                <ion-avatar item-start>
-                    <img src="assets/delivery-package-opened.png">
-                </ion-avatar>
+                <ion-icon item-start [name]="data.icon"></ion-icon>
                 <h2 class="title">
-                    <ion-icon name="checkmark-circle" color="secondary"></ion-icon> <b>{{data.title}}</b></h2>
+                    <ion-icon name="checkmark-circle" color="secondary"></ion-icon>
+                    <b>{{data.title}}</b>
+                </h2>
                 <p>{{data.trackingNum}}</p>
-
-
             </ion-item>
             <ion-item-options>
                 <button ion-button color="danger" expandable icon-start (tap)="delete(i,data.title)">
-                  <ion-icon name="trash"></ion-icon>
-                  Delete
+                    <ion-icon name="trash"></ion-icon>
+                    Delete
                 </button>
             </ion-item-options>
         </ion-item-sliding>
     </ion-list>
 
-    <!-- <ion-list padding>
-        <ion-item *ngFor="let data of trackNum" (click)="trackDetail(data)">
-            {{data}}
-        </ion-item>
-    </ion-list> -->
-
-
     <ion-fab right bottom>
-        <button ion-fab color="secondary" (click)="addTracking()"><ion-icon name="add"></ion-icon></button>
+        <button ion-fab color="secondary" (click)="addTracking()">
+            <ion-icon name="add"></ion-icon>
+        </button>
     </ion-fab>
 
-    <!-- <div class="footer-img">
-        <img src="assets/bottom.jpg" alt="footer">
-    </div> -->
 
 </ion-content>

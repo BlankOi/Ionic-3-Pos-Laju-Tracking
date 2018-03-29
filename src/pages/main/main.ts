@@ -1,9 +1,8 @@
 import { DataProvider } from './../../providers/data/data';
 import { PosApiProvider } from './../../providers/pos-api/pos-api';
-import { Storage } from '@ionic/storage';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, ModalController, LoadingController, Platform } from 'ionic-angular';
-import { AdMobFreeBannerConfig, AdMobFree } from '@ionic-native/admob-free';
+import { IonicPage, NavController, AlertController, ModalController, LoadingController } from 'ionic-angular';
+import { DeviceFeedback } from '@ionic-native/device-feedback';
 
 
 @IonicPage()
@@ -14,117 +13,136 @@ import { AdMobFreeBannerConfig, AdMobFree } from '@ionic-native/admob-free';
 export class MainPage {
 
   //nak check ada data ke xde, kalau xde, show div xde data
-  public hasData: boolean=false;
+  private hasData: boolean = true;
+  private loader;
+  private displayItem: any[] = [];
+  private storedata: { title: string, trackingNum: string,icon:string };
+  private posData: any[] = [];
+  //declare dataObject
+  private dataObj: { title: string; trackingNum: string; data: any[]; };
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage, public pos: PosApiProvider, public alertCtrl: AlertController, public modalCtrl: ModalController, public loadingCtrl: LoadingController, public dataProvider: DataProvider, public adMobFree: AdMobFree, public platform: Platform) {
-  
+  constructor(
+    private navCtrl: NavController,
+    private pos: PosApiProvider,
+    private alertCtrl: AlertController,
+    private modalCtrl: ModalController,
+    private loadingCtrl: LoadingController,
+    private dataProvider: DataProvider,
+    public haptic: DeviceFeedback
+  ) {
   }
-  //ads
-  async showBannerAd() {
-    try {
-      const bannerConfig: AdMobFreeBannerConfig = {
-        id: 'ca-app-pub-8469816531943468/2647073559',
-        isTesting: false,
-        autoShow: true
-        // size:'320x32'
-      }
 
-      this.adMobFree.banner.config(bannerConfig);
 
-      const result = await this.adMobFree.banner.prepare();
-      console.log(result);
-    }
-    catch (e) {
-      console.error(e);
-    }
-  }
-//ads end
-  
   //pull to refresh start
-    doRefresh(refresher) {
-      console.log('Begin async operation', refresher);
+  doRefresh(refresher) {
+    console.log('Begin async operation', refresher);
+    setTimeout(() => {
       this.navCtrl.setRoot(this.navCtrl.getActive().component);
-
-      setTimeout(() => {
-        console.log('Async operation has ended');
-        refresher.complete();
-      }, 2000);
-    }
+      console.log('Async operation has ended');
+      refresher.complete();
+    }, 1500);
+  }
   //pull to refresh end
 
-  //show delete confirmation
-    showConfirm(index,title) {
-      let confirm = this.alertCtrl.create({
-        title: `Are your sure want to delete ${title}?`,
-        buttons: [
-          {
-            text: 'No',
-            handler: () => {
-              console.log('Disagree clicked');
-            }
-          },
-          {
-            text: 'Yes',
-            handler: () => {
-              console.log('Agree clicked');
-              this.dataProvider.delete(index);
+  ionViewDidLoad() {
+    this.dataProvider.getData().then((result) => {
+      console.log(result);
+      if (result!='') {
+        this.hasData = true;
+      } else {
+        this.hasData = false;
+      }
+      //change page to hasData true
+      result.forEach(element => {
+        this.storedata = {
+          title: element.title,
+          trackingNum: element.trackingNum,
+          icon:element.icon
+        }
 
-              // this.storage.remove(trackingNum).then(() => {
-                this.navCtrl.setRoot(this.navCtrl.getActive().component);
-                
-              // });
-            }
-          }]
-      })
-      confirm.present();
-    }
+        this.displayItem.push(this.storedata);
+      });
+    })
+  }
+
+  //show delete confirmation
+  showConfirm(index, title) {
+    let confirm = this.alertCtrl.create({
+      title: `Are your sure want to delete ${title}?`,
+      buttons: [
+        {
+          text: 'No',
+          handler: () => {
+            this.haptic.acoustic()
+
+            console.log('Disagree clicked');
+          }
+        },
+        {
+          text: 'Yes',
+          handler: () => {
+            this.haptic.acoustic()
+
+            console.log('Agree clicked');
+            this.dataProvider.delete(index);
+            this.navCtrl.setRoot(this.navCtrl.getActive().component);
+          }
+        }]
+    })
+    confirm.present();
+  }
   //show delete confirmation end
 
-    //code 204
-    showPrompt() {
-      let prompt = this.alertCtrl.create({
-        title: 'Sorry,please try again.',
-        message: "Parcel is being process.",
+  //code 204
+  showPrompt() {
+    let prompt = this.alertCtrl.create({
+      title: 'Sorry,please try again.',
+      message: "Parcel is being process.",
 
-        buttons: [
-          {
-            text: 'Ok',
-            handler: data => {
-              this.dismissLoading();
-              // prompt.dismiss();
-            }
+      buttons: [
+        {
+          text: 'Ok',
+          handler: data => {
+            this.haptic.acoustic()
+
+            this.dismissLoading();
+            // prompt.dismiss();
           }
-        ]
-      });
-      prompt.present();
-    }
+        }
+      ]
+    });
+    prompt.present();
+  }
   //error 202 end
-    //code 504
-    showPrompt2() {
-      let prompt = this.alertCtrl.create({
-        title: 'Sorry, Server usage is too high.',
-        message: "Please try again later.",
+  //code 504
+  showPrompt2() {
+    let prompt = this.alertCtrl.create({
+      title: 'Sorry, Server usage is too high.',
+      message: "Please try again later.",
 
-        buttons: [
-          {
-            text: 'Ok',
-            handler: data => {
-              this.dismissLoading();
-              prompt.dismiss();
-            }
+      buttons: [
+        {
+          text: 'Ok',
+          handler: data => {
+            this.haptic.acoustic()
+
+            this.dismissLoading();
+            prompt.dismiss();
           }
-        ]
-      });
-      prompt.present();
-    }
+        }
+      ]
+    });
+    prompt.present();
+  }
   //error 504
 
   addTracking() {
+    this.haptic.acoustic()
+
     this.navCtrl.push('HomePage');
   }
 
-  //loader start 
-  public loader;
+  //loader start
   showLoading() {
     if (!this.loader) {
       this.loader = this.loadingCtrl.create({
@@ -133,6 +151,7 @@ export class MainPage {
       this.loader.present();
     }
   }
+
   dismissLoading() {
     if (this.loader) {
       this.loader.dismiss();
@@ -140,49 +159,13 @@ export class MainPage {
     }
   }
   // loader end
-  displayItem=[];
-
-  storedata: { title: string, trackingNum: string};
-  ionViewDidLoad() {
-
-    // start ads
-    this.platform.ready().then(() => {
-      this.showBannerAd();
-    })
-    // end ads
-    this.dataProvider.getData().then((result) => {
-      // console.log(result);
-      //change page to hasData true
-
-      for (var key in result) {
-        if (result.hasOwnProperty(key)) {
-          //store dalam storedata object
-          this.storedata = {
-              title:result[key].title,
-              trackingNum: result[key].trackingNum,
-              // latestStatus: result[key]
-          }
-          if (this.storedata) {
-              console.log(this.storedata);
-            this.hasData = true;
-          }
-
-          this.displayItem.push(this.storedata);
-          // console.log(this.displayItem);
-        }
-      }
-
-    })
-
- 
-  }
 
   //value kat sini datang dari html sana, pass value untuk setiap row
   //array of semua data
-  public posData = [];
-  //declare dataObject
-  public dataObj: { title: string; trackingNum: string; data: any[]; };
+
   trackDetail(value) {
+    this.haptic.acoustic()
+
     this.showLoading();
     this.pos.getDetail(value.trackingNum).subscribe(result => {
       // nak amik data je
@@ -210,13 +193,17 @@ export class MainPage {
     })
   }
 
-  delete(index,title) {
+  delete(index, title) {
+    this.haptic.acoustic()
+
     // this.value = ;
     // console.log(index);
-    this.showConfirm(index,title);
+    this.showConfirm(index, title);
   }
 
   about() {
+    this.haptic.acoustic()
+
     let modal = this.modalCtrl.create('InfoPage');
     modal.present();
   }

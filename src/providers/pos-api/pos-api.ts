@@ -12,6 +12,5 @@ export class PosApiProvider {
   getDetail(trackingNum) {
     return this.http.get('https://api.jomgeek.com/v1/poslaju/?k=HoJ0vOxDOqUD1uRA&a=' + trackingNum)
       .map(res => res.json());
-    
   }
 }

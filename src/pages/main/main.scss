@@ -28,11 +28,16 @@
             }
             h2 {
                 color: #fff;
-                padding: 10px;
+                padding: 20px;
             }
         }
         .footer-img {
             bottom: 0;
             position: fixed;
         }
+        .text-input-md {
+            margin: 0px;
+            padding: 0;
+            width: calc(100% - 8px - 8px);
+            }
     }

@@ -2,6 +2,7 @@ import { Storage } from '@ionic/storage';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { SocialSharing } from '@ionic-native/social-sharing';
+import { DeviceFeedback } from '@ionic-native/device-feedback';
 
 
 @IonicPage()
@@ -16,14 +17,22 @@ export class TrackprogressPage {
   public title: string;
   public trackNum: string;
   public lastItem: any;
-  
+
   public dataPos: string[];
   //try save semua data dalam object
   public dataObj: { title: string; trackingNum: string; data: any[]; };
 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public platform: Platform, public storage: Storage, public social: SocialSharing) {
-   
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public platform: Platform,
+    public storage: Storage,
+    public social: SocialSharing,
+    public haptic: DeviceFeedback
+
+  ) {
+
   }
   ionViewDidLoad() {
     this.title = this.navParams.get('dataObj').title;
@@ -32,7 +41,7 @@ export class TrackprogressPage {
     this.lastItem = this.navParams.get('dataObj').data[0].process;
     this.lastDate = this.navParams.get('dataObj').data[0].date;
     this.lastLoc = this.navParams.get('dataObj').data[0].location;
-  
+
     console.log(this.dataPos[0]);
   }
 
@@ -42,16 +51,20 @@ export class TrackprogressPage {
     this.dataPos.length = 0;
   }
 
-  
+
   home() {
+    this.haptic.acoustic()
+
     this.navCtrl.goToRoot({
       'animate': true,
       'animation': 'slide',
       'direction': 'back'
     });
   }
-  
+
   share() {
+    this.haptic.acoustic()
+
     var options = {
       message: 'Latest Information.\n\nTracking Number: '+this.trackNum+'\nCurrent Status:'+this.lastItem + '\nLocation: ' + this.lastLoc + '\nDate: ' + this.lastDate+'\n\nGenerated using Pos Laju Tracking App, download on Google Play Store now.',
       subject: this.lastItem,

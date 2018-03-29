@@ -12,6 +12,17 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+
+@font-face {
+    font-family: karla;
+    src: url('../assets/fonts/karla.woff2');
+}
+
+* {
+    font-family: karla;
+}
+
+
 .bg {
     // background: #FAF9FF;
     background: #FEFEFE;
@@ -52,10 +63,25 @@
     }
 }
 
+.footer{
+    -webkit-box-shadow: none!important;
+    border-radius: 0px;
+    width: 100%;
+    margin: 0px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background: #f6515f;
+    position: absolute;
+    bottom: 0;
+    p {
+        color: rgba(255, 255, 255, 0.726) !important;
+    }
+}
+
 .custom-avatar {
     height: 30vw;
     width: 30vw;
-    border: 3px solid rgb(241, 131, 6);
+    border: 3px solid rgb(247, 244, 242);
     border-radius: 50%;
     display: inline-block;
     margin-left: auto;

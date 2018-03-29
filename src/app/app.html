@@ -1,45 +1,42 @@
 <!-- <ion-nav [root]="rootPage"></ion-nav> -->
 <ion-menu #sidebar [content]="content" (ionOpen)="onMenuOpen($event)" (ionClose)="onMenuClose($event)">
-
-
-
     <ion-content>
         <ion-card text-center class="hide-card">
             <img src="assets/org.jpg" class="custom-avatar" />
             <br>
             <h2>Pos Laju Tracking</h2>
-            <p>version 1.1.1 | 9 Nov 2017</p>
-            <!-- <p>Last Update: </p> -->
         </ion-card>
         <br>
         <ion-list no-lines>
-            <ion-item menuClose (click)="presentModal()">
-                <ion-icon name="heart" item-start color="darkblue"></ion-icon>
-                <h2>About</h2>
-            </ion-item>
-            <ion-item menuClose (click)="rate()">
-                <ion-icon name="star" item-start color="darkblue"></ion-icon>
-                <h2>Rate 5 Stars</h2>
-            </ion-item>
             <ion-item menuClose (click)="sendEmail()">
                 <ion-icon name="mail" item-start color="darkblue"></ion-icon>
-                <h2>Send Feedback</h2>
+                <h2>Contact Poslaju</h2>
             </ion-item>
             <ion-item menuClose (click)="share()">
                 <ion-icon name="share" item-start color="darkblue"></ion-icon>
                 <h2>Share App</h2>
             </ion-item>
+            <ion-item menuClose (click)="rate()">
+                <ion-icon name="star" item-start color="darkblue"></ion-icon>
+                <h2>Rate 5 Stars</h2>
+            </ion-item>
             <ion-item menuClose (click)="moreapp()">
                 <ion-icon name="apps" item-start color="darkblue"></ion-icon>
                 <h2>More App</h2>
             </ion-item>
-            <!-- <ion-item menuClose (click)="portfolio()">
-                <ion-icon name="person" item-start color="darkblue"></ion-icon>
-                <h2>My Portfolio</h2>
-            </ion-item> -->
+            <ion-item menuClose (click)="presentModal()">
+                <ion-icon name="information-circle" item-start color="darkblue"></ion-icon>
+                <h2>About</h2>
+            </ion-item>
+            <ion-item menuClose (click)="sendEmailToMe()">
+                <ion-icon name="md-person" item-start color="darkblue"></ion-icon>
+                <h2>Contact Dev</h2>
+            </ion-item>
         </ion-list>
+        <ion-card text-center class="footer">
+            <p>version 1.2.1 - 29 Mar 2018</p>
+        </ion-card>
     </ion-content>
-
 </ion-menu>
 
 <ion-nav #myNav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>
