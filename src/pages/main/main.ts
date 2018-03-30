@@ -3,7 +3,7 @@ import { PosApiProvider } from './../../providers/pos-api/pos-api';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, AlertController, ModalController, LoadingController } from 'ionic-angular';
 import { DeviceFeedback } from '@ionic-native/device-feedback';
-
+import { Storage } from "@ionic/storage";
 
 @IonicPage()
 @Component({
@@ -16,7 +16,7 @@ export class MainPage {
   private hasData: boolean = true;
   private loader;
   private displayItem: any[] = [];
-  private storedata: { title: string, trackingNum: string,icon:string };
+  private storedata: { title: string, trackingNum: string, icon: string };
   private posData: any[] = [];
   //declare dataObject
   private dataObj: { title: string; trackingNum: string; data: any[]; };
@@ -28,10 +28,33 @@ export class MainPage {
     private modalCtrl: ModalController,
     private loadingCtrl: LoadingController,
     private dataProvider: DataProvider,
-    public haptic: DeviceFeedback
+    public haptic: DeviceFeedback,
+    public storage: Storage
+
   ) {
   }
 
+  ionViewWillEnter() {
+  }
+
+  ionViewDidLoad() {
+    this.dataProvider.getData().then((result) => {
+      if (result.length > 0) {
+        this.hasData = true;
+      } else {
+        this.hasData = false;
+      }
+
+      result.forEach(element => {
+        this.storedata = {
+          title: element.title,
+          trackingNum: element.trackingNum,
+          icon: element.icon
+        }
+        this.displayItem.push(this.storedata);
+      });
+    })
+  }
 
   //pull to refresh start
   doRefresh(refresher) {
@@ -43,27 +66,6 @@ export class MainPage {
     }, 1500);
   }
   //pull to refresh end
-
-  ionViewDidLoad() {
-    this.dataProvider.getData().then((result) => {
-      console.log(result);
-      if (result!='') {
-        this.hasData = true;
-      } else {
-        this.hasData = false;
-      }
-      //change page to hasData true
-      result.forEach(element => {
-        this.storedata = {
-          title: element.title,
-          trackingNum: element.trackingNum,
-          icon:element.icon
-        }
-
-        this.displayItem.push(this.storedata);
-      });
-    })
-  }
 
   //show delete confirmation
   showConfirm(index, title) {

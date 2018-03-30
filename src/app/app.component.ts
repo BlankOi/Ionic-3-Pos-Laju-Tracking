@@ -10,12 +10,13 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { AdMobFreeBannerConfig, AdMobFree } from '@ionic-native/admob-free';
 import { DataProvider } from '../providers/data/data';
 import { KEYS } from "../private/constant";
+import { Storage } from "@ionic/storage";
 
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage: any = 'MainPage';
+  rootPage: any;
 
   constructor(
     platform: Platform,
@@ -29,7 +30,8 @@ export class MyApp {
     public social: SocialSharing,
     public adMobFree: AdMobFree,
     public dataProvider: DataProvider,
-    public haptic:DeviceFeedback
+    public haptic: DeviceFeedback,
+    public storage: Storage
   ) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
@@ -38,6 +40,17 @@ export class MyApp {
       // set status bar to white
       statusBar.backgroundColorByHexString('#f6515f');
       splashScreen.hide();
+
+      //check whether user had open the app, if not, set walkthrough
+      this.storage.get("intro-done").then(done => {
+        if (!done) {
+          this.storage.set("intro-done", true);
+          this.rootPage = "WalkthroughPage";
+        } else {
+          this.rootPage = "MainPage";
+        }
+      });
+
       this.showBannerAd();
     });
   }
@@ -52,9 +65,7 @@ export class MyApp {
         isTesting: false,
         autoShow: true
       }
-
       this.adMobFree.banner.config(bannerConfig);
-
       const result = await this.adMobFree.banner.prepare();
       console.log(result);
     }
@@ -99,11 +110,10 @@ export class MyApp {
 
   sendEmail() {
     this.haptic.acoustic()
-
     this.emailComposer.addAlias('gmail', 'com.google.android.gm');
     this.emailComposer.open({
       app: 'gmail',
-      to:'care@pos.com.my',
+      to: 'care@pos.com.my',
       cc: 'lan.psis@gmail.com',
       subject: 'Pos Laju Tracking App',
       body: 'Send your feedback to care@pos.com.my: ',
@@ -113,7 +123,6 @@ export class MyApp {
 
   sendEmailToMe() {
     this.haptic.acoustic()
-
     this.emailComposer.addAlias('gmail', 'com.google.android.gm');
     this.emailComposer.open({
       app: 'gmail',
@@ -126,7 +135,6 @@ export class MyApp {
 
   share() {
     this.haptic.acoustic()
-
     var options = {
       message: 'Pos Laju Tracking is a free app to help users to track Pos Laju Parcel. Download now at Google Play Store',
       subject: 'Pos Laju Tracking App',
@@ -135,6 +143,5 @@ export class MyApp {
     };
     this.social.shareWithOptions(options);
   }
-
 }
 

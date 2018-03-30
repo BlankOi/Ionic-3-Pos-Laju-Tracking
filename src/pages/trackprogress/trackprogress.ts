@@ -1,6 +1,6 @@
 import { Storage } from '@ionic/storage';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform, NavOptions } from 'ionic-angular';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { DeviceFeedback } from '@ionic-native/device-feedback';
 
@@ -35,13 +35,13 @@ export class TrackprogressPage {
 
   }
   ionViewDidLoad() {
+
     this.title = this.navParams.get('dataObj').title;
     this.trackNum = this.navParams.get('dataObj').trackingNum;
     this.dataPos = this.navParams.get('dataObj').data;
     this.lastItem = this.navParams.get('dataObj').data[0].process;
     this.lastDate = this.navParams.get('dataObj').data[0].date;
     this.lastLoc = this.navParams.get('dataObj').data[0].location;
-
     console.log(this.dataPos[0]);
   }
 
@@ -54,12 +54,19 @@ export class TrackprogressPage {
 
   home() {
     this.haptic.acoustic()
+    const opts: NavOptions = {
+      animate: true,
+      animation: 'slides',
+      direction: 'back',
+      easing: 'ease-in-out',
+    }
+    this.navCtrl.setRoot('MainPage', {}, opts)
 
-    this.navCtrl.goToRoot({
-      'animate': true,
-      'animation': 'slide',
-      'direction': 'back'
-    });
+    // this.navCtrl.goToRoot({
+    //    'animate': true,
+    //   'animation': 'slide',
+    //   'direction': 'back',
+    // })
   }
 
   share() {
