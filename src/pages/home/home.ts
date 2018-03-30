@@ -39,7 +39,7 @@ export class HomePage {
   public trackingNum: string;
   public title: string;
   public code: number;
-  public icon: string;
+  public icon: string = 'basket';
 
 
   constructor(
@@ -51,7 +51,7 @@ export class HomePage {
     public alertCtrl: AlertController,
     public dataProvider: DataProvider,
     public haptic: DeviceFeedback,
-    public actionSheetCtrl:ActionSheetController
+    public actionSheetCtrl: ActionSheetController
   ) {
   }
 
@@ -59,10 +59,10 @@ export class HomePage {
   //loader start
   public loader;
   showLoading() {
-      this.loader = this.loadingCtrl.create({
-        content: 'Checking...'
-      });
-      this.loader.present();
+    this.loader = this.loadingCtrl.create({
+      content: 'Checking...'
+    });
+    this.loader.present();
     // }
   }
 
@@ -142,6 +142,8 @@ export class HomePage {
         }
       }
 
+
+
       //store semua dalm object
       this.dataObj = {
         title: this.title,
@@ -181,25 +183,55 @@ export class HomePage {
 
   iconSelect() {
     let actionSheet = this.actionSheetCtrl.create({
-      title: "Choose below",
+      title: "Choose category",
       buttons: [
         {
-          text: "Camera",
-          icon: "camera",
+          text: "Basket",
+          icon: "basket",
           handler: () => {
             this.icon = 'basket'
           }
         },
         {
-          text: "Gallery",
-          icon: "photos",
+          text: "Tool",
+          icon: "build",
           handler: () => {
+            this.icon = 'build'
           }
         },
         {
-          text: "Remove avatar",
-          icon: "trash",
+          text: "Beverages ",
+          icon: "cafe",
           handler: () => {
+            this.icon = 'cafe'
+          }
+        },
+        {
+          text: "Gift ",
+          icon: "cube",
+          handler: () => {
+            this.icon = 'cube'
+          }
+        },
+        {
+          text: "Electronic",
+          icon: "desktop",
+          handler: () => {
+            this.icon = 'desktop'
+          }
+        },
+        {
+          text: "Letter",
+          icon: "mail-open",
+          handler: () => {
+            this.icon = 'mail-open'
+          }
+        },
+        {
+          text: "Cloth",
+          icon: "shirt",
+          handler: () => {
+            this.icon = 'shirt'
           }
         }
       ]
