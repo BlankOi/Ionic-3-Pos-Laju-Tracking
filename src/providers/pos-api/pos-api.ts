@@ -1,3 +1,4 @@
+import { KEYS } from './../../private/constant';
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
@@ -10,7 +11,7 @@ export class PosApiProvider {
   }
 
   getDetail(trackingNum) {
-    return this.http.get('https://api.jomgeek.com/v1/poslaju/?k=HoJ0vOxDOqUD1uRA&a=' + trackingNum)
+    return this.http.get(KEYS.API + trackingNum)
       .map(res => res.json());
   }
 }

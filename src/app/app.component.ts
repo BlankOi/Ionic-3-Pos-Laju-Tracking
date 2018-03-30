@@ -9,7 +9,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { AdMobFreeBannerConfig, AdMobFree } from '@ionic-native/admob-free';
 import { DataProvider } from '../providers/data/data';
-import { Keys } from "../private/constant";
+import { KEYS } from "../private/constant";
 
 @Component({
   templateUrl: 'app.html'
@@ -48,7 +48,7 @@ export class MyApp {
   async showBannerAd() {
     try {
       const bannerConfig: AdMobFreeBannerConfig = {
-        id: Keys.admob,
+        id: KEYS.ADMOB,
         isTesting: false,
         autoShow: true
       }
