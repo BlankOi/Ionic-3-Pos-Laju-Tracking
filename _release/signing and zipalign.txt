@@ -1,9 +1,9 @@
  keytool -genkey -v -keystore mazlan-pos.keystore -alias mazlan -keyalg RSA -keysize 2048 -validity 10000
 
-
+ionic cordova build android --prod --release
 ----------------------------
 
 jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore mazlan-pos.keystore android-release-unsigned.apk mazlan
 
 
-zipalign -v 4 android-release-unsigned.apk PosLajuTrackingv1.1.1.apk
+zipalign -v 4 android-release-unsigned.apk PosLajuTrackingv1.2.1.apk

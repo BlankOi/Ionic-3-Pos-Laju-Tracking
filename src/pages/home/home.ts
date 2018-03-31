@@ -1,6 +1,6 @@
 import { DataProvider } from './../../providers/data/data';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, LoadingController, AlertController, ActionSheetController } from 'ionic-angular';
+import { IonicPage, NavController, LoadingController, AlertController, ActionSheetController, ToastController } from 'ionic-angular';
 
 //pos provider
 import { PosApiProvider } from './../../providers/pos-api/pos-api';
@@ -51,7 +51,8 @@ export class HomePage {
     public alertCtrl: AlertController,
     public dataProvider: DataProvider,
     public haptic: DeviceFeedback,
-    public actionSheetCtrl: ActionSheetController
+    public actionSheetCtrl: ActionSheetController,
+    public toastCtrl: ToastController
   ) {
   }
 
@@ -189,53 +190,69 @@ export class HomePage {
           text: "Basket",
           icon: "basket",
           handler: () => {
-            this.icon = 'basket'
+            this.icon = 'basket';
+            this.toast('Basket');
           }
         },
         {
           text: "Tool",
           icon: "build",
           handler: () => {
-            this.icon = 'build'
+            this.icon = 'build';
+            this.toast('Tool');
           }
         },
         {
           text: "Beverages ",
           icon: "cafe",
           handler: () => {
-            this.icon = 'cafe'
+            this.icon = 'cafe';
+            this.toast('Beverages');
           }
         },
         {
           text: "Gift ",
           icon: "cube",
           handler: () => {
-            this.icon = 'cube'
+            this.icon = 'cube';
+            this.toast('Gift');
           }
         },
         {
-          text: "Electronic",
+          text: "Electronics",
           icon: "desktop",
           handler: () => {
-            this.icon = 'desktop'
+            this.icon = 'desktop';
+            this.toast('Electronics');
           }
         },
         {
           text: "Letter",
           icon: "mail-open",
           handler: () => {
-            this.icon = 'mail-open'
+            this.icon = 'mail-open';
+            this.toast('Letter');
           }
         },
         {
           text: "Cloth",
           icon: "shirt",
           handler: () => {
-            this.icon = 'shirt'
+            this.icon = 'shirt';
+            this.toast('Cloth');
           }
         }
       ]
     });
     actionSheet.present();
+  }
+
+  toast(cat) {
+    let toast = this.toastCtrl.create({
+      message: `${cat} selected`,
+      duration: 3000,
+      position: 'top'
+    });
+    toast.present();
   }
 }

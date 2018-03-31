@@ -1,9 +1,63 @@
 page-walkthrough {
-    .slide1{
+    .slide1 {
         background-color: #f6515f;
+        height: 100%;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        img {
+            width: 60%;
+            height: auto;
+        }
+        h1 {
+            font-weight: bold;
+            color: #fff;
+        }
+        p {
+            color: #fff;
+        }
     }
-
-     .slide2{
-        background-color: #25BDC2;
+    .slide2 {
+        background-color: #40CFA4;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        img {
+            width: 60%;
+            height: auto;
+        }
+        h1 {
+            font-weight: bold;
+            color: #fff;
+        }
+        p {
+            color: #fff;
+        }
+    }
+    .slide3 {
+        background-color: #49C6EE;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        img {
+            width: 60%;
+            height: auto;
+            margin-bottom: 10px;
+        }
+        h1 {
+            font-weight: bold;
+            color: #fff;
+        }
+        p {
+            color: #fff;
+        }
+        button {
+            display: flex;
+            align-items: center;
+            margin: 0 auto;
+        }
     }
 }

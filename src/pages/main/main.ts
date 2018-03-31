@@ -13,7 +13,7 @@ import { Storage } from "@ionic/storage";
 export class MainPage {
 
   //nak check ada data ke xde, kalau xde, show div xde data
-  private hasData: boolean = true;
+  private hasData: boolean = false;
   private loader;
   private displayItem: any[] = [];
   private storedata: { title: string, trackingNum: string, icon: string };
@@ -207,6 +207,11 @@ export class MainPage {
     this.haptic.acoustic()
 
     let modal = this.modalCtrl.create('InfoPage');
+    modal.present();
+  }
+
+  presentModal(){
+    let modal = this.modalCtrl.create('HomeinfoPage');
     modal.present();
   }
 }

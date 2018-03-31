@@ -1,0 +1,38 @@
+page-homeinfo {
+    .slide2 {
+        background-color: #f6515f;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        img {
+            width: 60%;
+            height: auto;
+        }
+        h1 {
+            font-weight: bold;
+            color: #fff;
+        }
+        p {
+            color: #fff;
+        }
+    }
+    .slide3 {
+        background-color: #f6515f;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        img {
+            width: 60%;
+            height: auto;
+            margin-bottom: 10px;
+        }
+        h1 {
+            font-weight: bold;
+            color: #fff;
+        }
+        p {
+            color: #fff;
+        }
+    }
+}
