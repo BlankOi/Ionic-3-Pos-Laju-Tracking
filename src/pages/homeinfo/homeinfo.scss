@@ -1,35 +1,45 @@
 page-homeinfo {
+    .wrap {
+        height: 97%;
+    }
     .slide2 {
-        background-color: #f6515f;
+        // background-color: map-get($colors, primary );
         height: 100%;
         display: flex;
         justify-content: center;
         align-items: center;
         img {
-            width: 60%;
+            display: flex;
+            align-items: center;
+            margin: 0 auto;
+            width: 70%;
             height: auto;
+            margin-bottom: 40px;
         }
         h1 {
             font-weight: bold;
-            color: #fff;
+            margin-bottom: 5px;
         }
         p {
-            color: #fff;
+            color: map-get($colors, primary);
         }
     }
     .slide3 {
-        background-color: #f6515f;
+        // background-color: map-get($colors, primary);
         display: flex;
         justify-content: center;
         align-items: center;
         img {
-            width: 60%;
+            display: flex;
+            align-items: center;
+            margin: 0 auto;
+            width: 70%;
             height: auto;
-            margin-bottom: 10px;
+            margin-bottom: 40px;
         }
         h1 {
             font-weight: bold;
-            color: #fff;
+            margin-bottom: 5px;
         }
         p {
             color: #fff;

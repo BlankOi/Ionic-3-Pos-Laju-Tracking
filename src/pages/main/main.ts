@@ -1,9 +1,10 @@
-import { DataProvider } from './../../providers/data/data';
-import { PosApiProvider } from './../../providers/pos-api/pos-api';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, AlertController, ModalController, LoadingController } from 'ionic-angular';
+import { Clipboard } from '@ionic-native/clipboard';
 import { DeviceFeedback } from '@ionic-native/device-feedback';
 import { Storage } from "@ionic/storage";
+import { AlertController, IonicPage, LoadingController, ModalController, NavController, ToastController } from 'ionic-angular';
+import { DataProvider } from './../../providers/data/data';
+import { PosApiProvider } from './../../providers/pos-api/pos-api';
 
 @IonicPage()
 @Component({
@@ -29,8 +30,9 @@ export class MainPage {
     private loadingCtrl: LoadingController,
     private dataProvider: DataProvider,
     public haptic: DeviceFeedback,
-    public storage: Storage
-
+    public storage: Storage,
+    public clipboard: Clipboard,
+    public toast: ToastController
   ) {
   }
 
@@ -140,7 +142,6 @@ export class MainPage {
 
   addTracking() {
     this.haptic.acoustic()
-
     this.navCtrl.push('HomePage');
   }
 
@@ -167,7 +168,6 @@ export class MainPage {
 
   trackDetail(value) {
     this.haptic.acoustic()
-
     this.showLoading();
     this.pos.getDetail(value.trackingNum).subscribe(result => {
       // nak amik data je
@@ -195,9 +195,22 @@ export class MainPage {
     })
   }
 
+  copy(i, trackingNum) {
+    this.haptic.acoustic()
+    this.clipboard.copy(trackingNum).then(() => {
+      let toast = this.toast.create({
+        message: 'Copied to clipboard',
+        duration: 2000,
+        position: 'bottom',
+        showCloseButton: true
+      });
+      toast.present();
+    });
+
+  }
+
   delete(index, title) {
     this.haptic.acoustic()
-
     // this.value = ;
     // console.log(index);
     this.showConfirm(index, title);
@@ -205,12 +218,11 @@ export class MainPage {
 
   about() {
     this.haptic.acoustic()
-
     let modal = this.modalCtrl.create('InfoPage');
     modal.present();
   }
 
-  presentModal(){
+  presentModal() {
     let modal = this.modalCtrl.create('HomeinfoPage');
     modal.present();
   }

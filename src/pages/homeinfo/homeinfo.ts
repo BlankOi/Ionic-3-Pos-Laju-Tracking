@@ -1,12 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
+import { DeviceFeedback } from '@ionic-native/device-feedback';
 
-/**
- * Generated class for the HomeinfoPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
@@ -18,7 +13,8 @@ export class HomeinfoPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    public viewCtrl: ViewController
+    public viewCtrl: ViewController,
+    public haptic: DeviceFeedback,
   ) {
   }
 
@@ -27,6 +23,7 @@ export class HomeinfoPage {
   }
 
   dismiss() {
+    this.haptic.acoustic()
     this.viewCtrl.dismiss();
   }
 }

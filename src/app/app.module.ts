@@ -1,22 +1,25 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
-import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
-import { SplashScreen } from '@ionic-native/splash-screen';
-import { StatusBar } from '@ionic-native/status-bar';
 import { HttpModule } from '@angular/http';
-
-import { MyApp } from './app.component';
-
-import { PosApiProvider } from './../providers/pos-api/pos-api';
-import { BarcodeScanner } from '@ionic-native/barcode-scanner';
-import { IonicStorageModule } from '@ionic/storage';
-import { SocialSharing } from '@ionic-native/social-sharing';
-import { EmailComposer } from '@ionic-native/email-composer';
-import { DataProvider } from '../providers/data/data';
+import { BrowserModule } from '@angular/platform-browser';
 import { AdMobFree } from '@ionic-native/admob-free';
 import { AppRate } from "@ionic-native/app-rate";
-import { InAppBrowser } from "@ionic-native/in-app-browser";
+import { BarcodeScanner } from '@ionic-native/barcode-scanner';
+import { Clipboard } from '@ionic-native/clipboard';
 import { DeviceFeedback } from "@ionic-native/device-feedback";
+import { EmailComposer } from '@ionic-native/email-composer';
+import { HeaderColor } from "@ionic-native/header-color";
+import { InAppBrowser } from "@ionic-native/in-app-browser";
+import { Screenshot } from "@ionic-native/screenshot";
+import { SocialSharing } from '@ionic-native/social-sharing';
+import { SplashScreen } from '@ionic-native/splash-screen';
+import { StatusBar } from '@ionic-native/status-bar';
+import { IonicStorageModule } from '@ionic/storage';
+import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
+import { DataProvider } from '../providers/data/data';
+import { PosApiProvider } from './../providers/pos-api/pos-api';
+import { MyApp } from './app.component';
+
+
 
 @NgModule({
   declarations: [
@@ -48,7 +51,10 @@ import { DeviceFeedback } from "@ionic-native/device-feedback";
     AdMobFree,
     AppRate,
     InAppBrowser,
-    DeviceFeedback
+    DeviceFeedback,
+    Clipboard,
+    Screenshot,
+    HeaderColor
   ]
 })
 export class AppModule {}

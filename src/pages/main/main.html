@@ -37,6 +37,10 @@
                 <p>{{data.trackingNum}}</p>
             </ion-item>
             <ion-item-options>
+                <button ion-button color="secondary" expandable icon-start (tap)="copy(i,data.trackingNum)">
+                    <ion-icon name="copy"></ion-icon>
+                    COPY
+                </button>
                 <button ion-button color="danger" expandable icon-start (tap)="delete(i,data.title)">
                     <ion-icon name="trash"></ion-icon>
                     Delete
@@ -50,6 +54,5 @@
             <ion-icon name="add"></ion-icon>
         </button>
     </ion-fab>
-
 
 </ion-content>

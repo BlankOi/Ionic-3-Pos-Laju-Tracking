@@ -12,38 +12,28 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
-
 @font-face {
-    font-family: karla;
-    src: url('../assets/fonts/karla.woff2');
+    font-family: LatoRegular;
+    src: url('../assets/fonts/Lato-Regular.ttf.woff');
 }
 
 * {
-    font-family: karla;
+    font-family: LatoRegular;
+    font-weight: normal;
+    font-style: normal;
 }
-
 
 .bg {
     // background: #FAF9FF;
-    background: #FEFEFE;
+    background: map-get($colors, bg);
 }
 
 .bg2 {
-    background: #f6515f;
-}
-
-.bg3 {
-    // background: #eff6fc;
-    background: #EECDA3;
-    /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right, #EF629F, #EECDA3);
-    /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to right, #EF629F, #EECDA3);
-    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: map-get($colors, primary);
 }
 
 .hide-card {
-    -webkit-box-shadow: none!important;
+    -webkit-box-shadow: none !important;
     border-radius: 0px;
     width: 100%;
     margin: 0px;
@@ -52,25 +42,25 @@
     background: url('../assets/pos.jpg');
     background-size: cover;
     background-position: center;
-    background: #f6515f;
+    background: map-get($colors, primary);
     h2 {
-        color: #fff !important;
+        color: map-get($colors, light) !important;
         margin-top: 15px !important;
         font-weight: bold;
     }
     p {
-        color: #fff !important;
+        color: map-get($colors, light) !important;
     }
 }
 
-.footer{
-    -webkit-box-shadow: none!important;
+.footer {
+    -webkit-box-shadow: none !important;
     border-radius: 0px;
     width: 100%;
     margin: 0px;
     padding-top: 10px;
     padding-bottom: 10px;
-    background: #f6515f;
+    background: map-get($colors, primary);
     position: absolute;
     bottom: 0;
     p {
@@ -81,7 +71,7 @@
 .custom-avatar {
     height: 30vw;
     width: 30vw;
-    border: 3px solid rgb(247, 244, 242);
+    border: map-get($colors, danger);
     border-radius: 50%;
     display: inline-block;
     margin-left: auto;

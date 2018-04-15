@@ -23,11 +23,11 @@
                 width: 20%;
             }
             p {
-                color: #fff;
+                color: map-get($colors, light );
                 margin: 0 30px 5px 30px;
             }
             h2 {
-                color: #fff;
+                color: map-get($colors, light );
                 padding: 20px;
             }
         }

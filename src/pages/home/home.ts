@@ -1,16 +1,16 @@
-import { DataProvider } from './../../providers/data/data';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, LoadingController, AlertController, ActionSheetController, ToastController } from 'ionic-angular';
-
+//BarcodeScanner
+import { BarcodeScanner } from '@ionic-native/barcode-scanner';
+import { DeviceFeedback } from '@ionic-native/device-feedback';
+//IonicStorageModule
+import { Storage } from '@ionic/storage';
+import { ActionSheetController, AlertController, IonicPage, LoadingController, NavController, ToastController } from 'ionic-angular';
+import { DataProvider } from './../../providers/data/data';
 //pos provider
 import { PosApiProvider } from './../../providers/pos-api/pos-api';
 
-//BarcodeScanner
-import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
-//IonicStorageModule
-import { Storage } from '@ionic/storage';
-import { DeviceFeedback } from '@ionic-native/device-feedback';
+
 
 @IonicPage()
 @Component({

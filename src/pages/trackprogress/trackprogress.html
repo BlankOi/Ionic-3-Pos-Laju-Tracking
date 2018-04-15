@@ -3,6 +3,9 @@
     <ion-navbar color="primary" hideBackButton="true">
         <ion-title>Delivery Status</ion-title>
         <ion-buttons end>
+            <button ion-button icon-left color="light" (click)="takeScreenshot()">
+                <ion-icon name="images"></ion-icon>
+            </button>
             <button ion-button icon-right large (click)="share()">
               <ion-icon name="share" color="light"></ion-icon>
             </button>
@@ -39,7 +42,7 @@
     <div class="main-content">
         <ion-card *ngFor="let pos of dataPos " class="overlap">
             <ion-card-content>
-                <p color="primary" class="text-header"><b> {{pos.process}}</b></p>
+                <p color="primary" class="text-header"><b> {{pos.process|titlefix}}</b></p>
                 <ion-chip>
                     <ion-icon name="pin"></ion-icon>
                     <ion-label><b>{{pos.location}}</b></ion-label>

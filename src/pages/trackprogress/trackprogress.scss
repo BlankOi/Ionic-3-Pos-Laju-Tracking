@@ -22,9 +22,8 @@ page-trackprogress {
     .trackDetail {
         text-align: center;
         margin-top: -170px;
-        margin-bottom: 40px;
-        // border-radius: 5px;
-        color: white;
+        margin-bottom: 40px; // border-radius: 5px;
+        color: map-get($colors, light);
     }
     ion-item {
         p {
@@ -37,14 +36,14 @@ page-trackprogress {
         font-size: 1.6rem;
         font-weight: normal;
         text-transform: none;
-        color: #fff !important;
+        color: map-get($colors, light) !important;
         background-color: transparent !important;
     }
     .overlap {
         margin-top: -30px;
         margin-bottom: 40px;
         border-radius: 5px;
-        background-color: white;
+        background-color: map-get($colors, light);
     }
     .text-header {
         color: color($colors, primary);
@@ -59,6 +58,12 @@ page-trackprogress {
         background: rgba(0, 0, 0, 0.12);
         margin: 0px 0 10px 0;
     }
+    .chip-md>ion-label {
+        margin-top: 3px;
+    }
+    ion-chip ion-icon {
+        padding-top: 3px;
+    }
     .date {
         // margin-top: px;
         margin-left: 20px;
@@ -66,11 +71,9 @@ page-trackprogress {
     }
     .home {
         position: fixed;
-        bottom: 10px;
-        // right: 10px;
+        bottom: 10px; // right: 10px;
         width: 90%;
-        margin-left: 5%;
-        // text-align: center;
+        margin-left: 5%; // text-align: center;
         // margin-left: 40%;
         // padding-right: 40px;
         // padding: 0 10px;

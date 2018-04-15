@@ -1,16 +1,17 @@
-import { DeviceFeedback } from '@ionic-native/device-feedback';
-import { InAppBrowser } from '@ionic-native/in-app-browser';
-import { AppRate } from '@ionic-native/app-rate';
-import { SocialSharing } from '@ionic-native/social-sharing';
-import { EmailComposer } from '@ionic-native/email-composer';
 import { Component } from '@angular/core';
-import { Platform, Events, App } from 'ionic-angular';
-import { StatusBar } from '@ionic-native/status-bar';
+import { AdMobFree, AdMobFreeBannerConfig } from '@ionic-native/admob-free';
+import { AppRate } from '@ionic-native/app-rate';
+import { DeviceFeedback } from '@ionic-native/device-feedback';
+import { EmailComposer } from '@ionic-native/email-composer';
+import { HeaderColor } from '@ionic-native/header-color';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
+import { SocialSharing } from '@ionic-native/social-sharing';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { AdMobFreeBannerConfig, AdMobFree } from '@ionic-native/admob-free';
-import { DataProvider } from '../providers/data/data';
-import { KEYS } from "../private/constant";
+import { StatusBar } from '@ionic-native/status-bar';
 import { Storage } from "@ionic/storage";
+import { App, Events, Platform } from 'ionic-angular';
+import { KEYS } from "../private/constant";
+import { DataProvider } from '../providers/data/data';
 
 @Component({
   templateUrl: 'app.html'
@@ -31,7 +32,8 @@ export class MyApp {
     public adMobFree: AdMobFree,
     public dataProvider: DataProvider,
     public haptic: DeviceFeedback,
-    public storage: Storage
+    public storage: Storage,
+    public header: HeaderColor,
   ) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
@@ -39,6 +41,7 @@ export class MyApp {
       statusBar.styleDefault();
       // set status bar to white
       statusBar.backgroundColorByHexString('#f6515f');
+      header.tint("#f6515f");
       splashScreen.hide();
 
       //check whether user had open the app, if not, set walkthrough
