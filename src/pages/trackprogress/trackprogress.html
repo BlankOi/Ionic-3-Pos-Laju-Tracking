@@ -43,10 +43,7 @@
         <ion-card *ngFor="let pos of dataPos " class="overlap">
             <ion-card-content>
                 <p color="primary" class="text-header"><b> {{pos.process|titlefix}}</b></p>
-                <ion-chip>
-                    <ion-icon name="pin"></ion-icon>
-                    <ion-label><b>{{pos.location}}</b></ion-label>
-                </ion-chip>
+                <chip2 text={{pos.location}} icon="pin"></chip2>
                 <div class="date">
                     <span>{{pos.date}}</span>
                 </div>
