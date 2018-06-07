@@ -36,16 +36,17 @@
     -webkit-box-shadow: none !important;
     border-radius: 0px;
     width: 100%;
-    margin: 0px;
-    padding-top: 30px;
-    padding-bottom: 20px;
+    margin: 0;
+    padding-top: 1.4em;
+    padding-bottom: 1.4em;
+    // height: 20vh;
     background: url('../assets/pos.jpg');
     background-size: cover;
     background-position: center;
     background: map-get($colors, primary);
     h2 {
         color: map-get($colors, light) !important;
-        margin-top: 15px !important;
+        margin-top: 1.5em !important;
         font-weight: bold;
     }
     p {
@@ -53,25 +54,18 @@
     }
 }
 
-.footer {
-    -webkit-box-shadow: none !important;
-    border-radius: 0px;
-    width: 100%;
-    margin: 0px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    background: map-get($colors, primary);
-    position: absolute;
-    bottom: 0;
-    p {
-        color: rgba(255, 255, 255, 0.726) !important;
-    }
+.footer-text{
+    margin-top: 1em !important;
+    font-size: 0.7em !important;
+    color: map-get($colors, light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .custom-avatar {
-    height: 30vw;
-    width: 30vw;
-    border: map-get($colors, danger);
+    height: 6em;
+    width: 6em;
     border-radius: 50%;
     display: inline-block;
     margin-left: auto;
