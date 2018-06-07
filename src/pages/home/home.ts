@@ -175,6 +175,27 @@ export class HomePage {
     })
   }
 
+  //this function will save the tracking number directly
+  saveDraft(){
+    this.haptic.acoustic();
+
+    let prompt = this.alertCtrl.create({
+      title: 'Tracking Number Saved',
+      message: ` ${this.title} - ${this.trackingNum}` ,
+
+      buttons: [
+        {
+          text: 'Ok',
+          handler: data => {
+            prompt.dismiss();
+          }
+        }
+      ]
+    });
+    prompt.present();
+    
+  }
+
   reset() {
     this.haptic.acoustic()
 

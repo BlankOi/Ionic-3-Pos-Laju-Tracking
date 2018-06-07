@@ -5,6 +5,7 @@ import { Storage } from "@ionic/storage";
 import { AlertController, IonicPage, LoadingController, ModalController, NavController, ToastController } from 'ionic-angular';
 import { DataProvider } from './../../providers/data/data';
 import { PosApiProvider } from './../../providers/pos-api/pos-api';
+import 'rxjs/add/operator/timeout';
 
 @IonicPage()
 @Component({
@@ -139,6 +140,27 @@ export class MainPage {
     prompt.present();
   }
   //error 504
+   //code connectionTimeout
+   connectionTimeout() {
+    let prompt = this.alertCtrl.create({
+      title: 'Connection Timeout.',
+      message: "Please make sure your connection is OK",
+
+      buttons: [
+        {
+          text: 'Ok',
+          handler: data => {
+            this.haptic.acoustic()
+
+            this.dismissLoading();
+            prompt.dismiss();
+          }
+        }
+      ]
+    });
+    prompt.present();
+  }
+  //error connectionTimeout
 
   addTracking() {
     this.haptic.acoustic()
@@ -169,7 +191,9 @@ export class MainPage {
   trackDetail(value) {
     this.haptic.acoustic()
     this.showLoading();
-    this.pos.getDetail(value.trackingNum).subscribe(result => {
+    this.pos.getDetail(value.trackingNum)
+    .timeout(10000)
+    .subscribe(result => {
       // nak amik data je
       for (var key in result.data) {
         if (result.data.hasOwnProperty(key)) {
@@ -192,7 +216,11 @@ export class MainPage {
       } if (result.code == 504) {
         this.showPrompt2();
       }
-    })
+    },
+    error => { 
+       this.dismissLoading();
+       this.connectionTimeout();
+    });
   }
 
   copy(i, trackingNum) {

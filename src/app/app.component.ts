@@ -40,7 +40,8 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
       // set status bar to white
-      statusBar.backgroundColorByHexString('#f6515f');
+      statusBar.styleLightContent();
+      // backgroundColorByHexString('#f6515f');
       header.tint("#f6515f");
       splashScreen.hide();
 

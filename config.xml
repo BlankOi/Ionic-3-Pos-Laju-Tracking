@@ -79,7 +79,6 @@
         <splash height="480" src="resources/ios/splash/Default~iphone.png" width="320" />
     </platform>
     <allow-navigation href="http://10.114.26.196:8100" />
-    <engine name="android" spec="6.3.0" />
     <plugin name="cordova-plugin-console" spec="^1.1.0" />
     <plugin name="cordova-plugin-device" spec="^1.1.7" />
     <plugin name="cordova-plugin-splashscreen" spec="^4.1.0" />
@@ -102,4 +101,5 @@
     <plugin name="cordova-plugin-headercolor" spec="^1.0.0" />
     <plugin name="com.darktalker.cordova.screenshot" spec="^0.1.6" />
     <plugin name="cordova-clipboard" spec="^1.1.1" />
+    <engine name="android" spec="6.3.0" />
 </widget>
