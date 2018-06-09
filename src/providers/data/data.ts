@@ -3,6 +3,8 @@ import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Storage } from '@ionic/storage';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/fromPromise';
 
 @Injectable()
 export class DataProvider {
@@ -11,15 +13,27 @@ export class DataProvider {
 
   constructor(public http: Http, public storage: Storage) {
     // this.storage.clear();
-    this.storage.get('todos').then((result) => {
-      this.data = result;
-      this.observableData = <BehaviorSubject<any[]>>new BehaviorSubject([]);
-    })
+    this.getData
+      // this.storage.get('todos')
+      .subscribe((result) => {
+        this.data = result;
+      })
   }
 
-  getData() {
-    return this.storage.get('todos');
-  }
+  // getData() {
+  //   return this.storage.get('todos')
+  //   .then((result) => {
+  //   // this.data = result;
+  //   this.observableData = result;
+  // })
+  // console.log(' this.observableData', this.observableData)
+  // }
+
+  getData: Observable<any> = Observable.fromPromise(this.storage.get('todos').then(data => {
+    //maybe some processing logic like JSON.parse(token)
+    console.log('observble data:', data);
+    return data;
+  }));
 
   save(dataObj) {
     // let newData = dataObj;
@@ -29,7 +43,6 @@ export class DataProvider {
       this.storage.set('todos', this.data);
     } else {
       this.data.push(dataObj);
-      this.observableData.next(Object.assign({}, this.data));
       this.storage.set('todos', this.data);
     }
   }

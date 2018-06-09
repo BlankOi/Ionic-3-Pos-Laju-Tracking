@@ -4,13 +4,11 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { DeviceFeedback } from '@ionic-native/device-feedback';
 //IonicStorageModule
 import { Storage } from '@ionic/storage';
-import { ActionSheetController, AlertController, IonicPage, LoadingController, NavController, ToastController } from 'ionic-angular';
+import { ActionSheetController, AlertController, IonicPage, LoadingController, NavController, ToastController, Events } from 'ionic-angular';
 import { DataProvider } from './../../providers/data/data';
 //pos provider
 import { PosApiProvider } from './../../providers/pos-api/pos-api';
 import 'rxjs/add/operator/timeout';
-
-
 
 @IonicPage()
 @Component({
@@ -18,6 +16,7 @@ import 'rxjs/add/operator/timeout';
   templateUrl: 'home.html'
 })
 export class HomePage {
+  trackingNumDB: any[];
 
   dataObj: {
     title: string;
@@ -52,10 +51,122 @@ export class HomePage {
     public dataProvider: DataProvider,
     public haptic: DeviceFeedback,
     public actionSheetCtrl: ActionSheetController,
-    public toastCtrl: ToastController
+    public toastCtrl: ToastController,
+    public events: Events
   ) {
   }
 
+  ionViewDidLoad() {
+    this.dataProvider.getData.subscribe((result) => {
+      if (result != undefined && result != null) {
+        this.trackingNumDB = result;
+        console.log("data from db:", this.trackingNumDB)
+      }
+    })
+  }
+
+  //BarcodeScanner
+  scan() {
+    this.haptic.acoustic()
+    this.barcode.scan().then((barcodeData) => {
+      this.trackingNum = barcodeData.text;
+    }, (err) => {
+      // An error occurred
+    });
+  }
+
+  //track button
+  getTracking() {
+    this.haptic.acoustic()
+    this.showLoading();
+
+    if (this.trackingNumDB.map(element => { return element.trackingNum }).indexOf(this.trackingNum.toUpperCase()) == -1) {
+      this.pos.getDetail(this.trackingNum.toUpperCase())
+        .timeout(10000)
+        .subscribe(result => {
+          this.code = result.code;
+
+          // nak amik key data je (list tracking status) dan save dlm trackingStatus array
+          for (var key in result.data) {
+            if (result.data.hasOwnProperty(key)) {
+              this.trackingStatus.push(result.data[key]);
+            }
+          }
+
+          //store semua dalm object
+          this.dataObj = {
+            title: this.title,
+            trackingNum: this.trackingNum.toUpperCase(),
+            data: this.trackingStatus,
+            code: result.code,
+            icon: this.icon
+          }
+          console.log('dataObj:', this.dataObj);
+
+          //nak check code ,204 error, 200 ok, 504 "Server terlalu perlahan."
+          if (result.code == 200) {
+            this.dismissLoading();
+            //save dataObj guna key trackingNum, so retrive guna get()
+            // this.dataObjNew.push(this.dataObj);
+            this.dataProvider.save(this.dataObj);
+
+            //send data to TrackprogressPage
+            this.navCtrl.push('TrackprogressPage', { 'dataObj': this.dataObj });
+
+          } if (result.code == 204) {
+            this.showPrompt();
+          } if (result.code == 504) {
+            this.showPrompt2();
+          }
+        },
+        error => {
+          this.dismissLoading();
+          this.connectionTimeout();
+        })
+    } else {
+      console.log('data exist');
+      this.dataExist();
+    }
+  }
+
+  //this function will save the tracking number directly
+  saveDraft() {
+    this.haptic.acoustic();
+
+    if (this.trackingNumDB.map(element => { return element.trackingNum }).indexOf(this.trackingNum.toUpperCase()) == -1) {
+      this.dataObj = {
+        title: this.title,
+        trackingNum: this.trackingNum.toUpperCase(),
+        data: this.trackingStatus,
+        code: 0,
+        icon: this.icon
+      }
+
+      this.dataProvider.save(this.dataObj)
+
+      let prompt = this.alertCtrl.create({
+        title: 'Tracking Number Saved',
+        message: `${this.title != undefined ? this.title : this.trackingNum} - ${this.trackingNum}`,
+        buttons: [
+          {
+            text: 'Ok',
+            handler: data => {
+              this.trackingNum = '';
+              this.title = '';
+              this.events.publish('data:created', this.trackingNum.toUpperCase())
+              prompt.dismiss();
+            }
+          }
+        ]
+      });
+      prompt.present();
+
+    } else {
+      console.log('data exist');
+      this.dataExist();
+    }
+
+  }
 
   //loader start
   public loader;
@@ -64,43 +175,38 @@ export class HomePage {
       content: 'Checking...'
     });
     this.loader.present();
-    // }
   }
 
+  //loader dismiss
   dismissLoading() {
     if (this.loader) {
       this.loader.dismiss();
       this.loader = null;
     }
   }
-  // loader end
 
   //code 204
   showPrompt() {
     let prompt = this.alertCtrl.create({
       title: 'Sorry, no record found.',
-      message: "Please make sure your tracking number is correct or try again later.",
-
+      message: "Your item might not be process yet, please try again later.",
       buttons: [
         {
           text: 'Ok',
           handler: data => {
             this.dismissLoading();
-            // prompt.dismiss();
           }
         }
       ]
     });
     prompt.present();
   }
-  //error 202 end
 
   //code 504
   showPrompt2() {
     let prompt = this.alertCtrl.create({
       title: 'Sorry, Server usage is too high.',
       message: "Please try again later.",
-
       buttons: [
         {
           text: 'Ok',
@@ -113,70 +219,23 @@ export class HomePage {
     });
     prompt.present();
   }
-  //error 504
 
-  //BarcodeScanner
-  scan() {
-    this.haptic.acoustic()
-
-    this.barcode.scan().then((barcodeData) => {
-      this.trackingNum = barcodeData.text;
-    }, (err) => {
-      // An error occurred
-    });
-  }
-  //BarcodeScanner end
-
-  //track button
-  getTracking() {
-    this.haptic.acoustic()
-
-    this.showLoading();
-
-    this.pos.getDetail(this.trackingNum.toUpperCase())
-      .timeout(10000)
-      .subscribe(result => {
-        this.code = result.code;
-
-        // nak amik key data je (list tracking status) dan save dlm trackingStatus array
-        for (var key in result.data) {
-          if (result.data.hasOwnProperty(key)) {
-            this.trackingStatus.push(result.data[key]);
+  //data exist
+  dataExist() {
+    let prompt = this.alertCtrl.create({
+      title: 'Data Exist',
+      message: "Tracking Number already exist, please check your tracking number again.",
+      buttons: [
+        {
+          text: 'Ok',
+          handler: data => {
+            this.dismissLoading();
+            prompt.dismiss();
           }
         }
-
-        //store semua dalm object
-        this.dataObj = {
-          title: this.title,
-          trackingNum: this.trackingNum.toUpperCase(),
-          data: this.trackingStatus,
-          code: result.code,
-          icon: this.icon
-        }
-        console.log('dataObj:', this.dataObj);
-
-        //nak check code ,204 error, 200 ok, 504 "Server SPR terlalu perlahan."
-        if (result.code == 200) {
-          this.dismissLoading();
-          //save dataObj guna key trackingNum, so retrive guna get()
-          // this.dataObjNew.push(this.dataObj);
-          this.dataProvider.save(this.dataObj);
-          // this.storage.set(this.dataObj.trackingNum, this.dataObj);
-
-          //send data to new HomePage
-          this.navCtrl.push('TrackprogressPage', { 'dataObj': this.dataObj });
-
-
-        } if (result.code == 204) {
-          this.showPrompt();
-        } if (result.code == 504) {
-          this.showPrompt2();
-        }
-      },
-      error => {
-        this.dismissLoading();
-        this.connectionTimeout();
-      })
+      ]
+    });
+    prompt.present();
   }
 
   //code connectionTimeout
@@ -198,38 +257,6 @@ export class HomePage {
       ]
     });
     prompt.present();
-  }
-
-  //this function will save the tracking number directly
-  saveDraft() {
-    this.haptic.acoustic();
-
-    this.dataObj = {
-      title: this.title,
-      trackingNum: this.trackingNum.toUpperCase(),
-      data: this.trackingStatus,
-      code: 0,
-      icon: this.icon
-    }
-
-    this.dataProvider.save(this.dataObj)
-
-    let prompt = this.alertCtrl.create({
-      title: 'Tracking Number Saved',
-      message: ` ${this.title} - ${this.trackingNum}`,
-
-      buttons: [
-        {
-          text: 'Ok',
-          handler: data => {
-            this.trackingNum = '';
-            prompt.dismiss();
-          }
-        }
-      ]
-    });
-    prompt.present();
-
   }
 
   reset() {

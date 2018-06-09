@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Clipboard } from '@ionic-native/clipboard';
 import { DeviceFeedback } from '@ionic-native/device-feedback';
 import { Storage } from "@ionic/storage";
-import { AlertController, IonicPage, LoadingController, ModalController, NavController, ToastController } from 'ionic-angular';
+import { AlertController, IonicPage, LoadingController, ModalController, NavController, ToastController, Events } from 'ionic-angular';
 import { DataProvider } from './../../providers/data/data';
 import { PosApiProvider } from './../../providers/pos-api/pos-api';
 import 'rxjs/add/operator/timeout';
@@ -33,33 +33,45 @@ export class MainPage {
     public haptic: DeviceFeedback,
     public storage: Storage,
     public clipboard: Clipboard,
-    public toast: ToastController
+    public toast: ToastController,
+    public events: Events
   ) {
-  }
+    events.subscribe('data:created', (trackNo) => {
+      this.dataProvider.getData.subscribe((result) => {
 
-  ionViewWillEnter() {
+        result.forEach(element => {
+          this.storedata = {
+            title: element.title,
+            trackingNum: element.trackingNum,
+            icon: element.icon
+          }
+        });
 
+        if (this.displayItem.map(element => { return element.trackingNum }).indexOf(trackNo) == -1) {
+          this.displayItem.push(this.storedata);
+        }
+      });
+    });
   }
 
   ionViewDidLoad() {
-    // this.dataProvider.observableData.subscribe(data => {
-    //   console.log('data:', data);
-    // })
-    this.dataProvider.getData().then((result) => {
-      if (result.length > 0) {
-        this.hasData = true;
-      } else {
-        this.hasData = false;
-      }
-
-      result.forEach(element => {
-        this.storedata = {
-          title: element.title,
-          trackingNum: element.trackingNum,
-          icon: element.icon
+    this.dataProvider.getData.subscribe((result) => {
+      if (result != undefined && result != null) {
+        if (result.length > 0) {
+          this.hasData = true;
+        } else {
+          this.hasData = false;
         }
-        this.displayItem.push(this.storedata);
-      });
+
+        result.forEach(element => {
+          this.storedata = {
+            title: element.title,
+            trackingNum: element.trackingNum,
+            icon: element.icon
+          }
+          this.displayItem.push(this.storedata);
+        });
+      }
     })
   }
 

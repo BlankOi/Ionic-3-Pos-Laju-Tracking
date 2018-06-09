@@ -9,7 +9,7 @@ import { SocialSharing } from '@ionic-native/social-sharing';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { Storage } from "@ionic/storage";
-import { App, Events, Platform } from 'ionic-angular';
+import { App, Events, Platform, AlertController } from 'ionic-angular';
 import { KEYS } from "../private/constant";
 import { DataProvider } from '../providers/data/data';
 
@@ -17,6 +17,7 @@ import { DataProvider } from '../providers/data/data';
   templateUrl: 'app.html'
 })
 export class MyApp {
+  displayItem: any[];
   rootPage: any;
 
   constructor(
@@ -34,6 +35,7 @@ export class MyApp {
     public haptic: DeviceFeedback,
     public storage: Storage,
     public header: HeaderColor,
+    public alertCtrl: AlertController,
   ) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
@@ -57,7 +59,9 @@ export class MyApp {
     });
   }
 
-  ionViewDidLoad() { }
+  ionViewDidLoad() {
+
+  }
 
   //ads
   async showBannerAd() {
@@ -68,7 +72,7 @@ export class MyApp {
         autoShow: true
       }
       this.adMobFree.banner.config(bannerConfig);
-      const result = await this.adMobFree.banner.prepare();
+      await this.adMobFree.banner.prepare();
     }
     catch (e) {
     }
@@ -110,13 +114,40 @@ export class MyApp {
 
   sendEmail() {
     this.haptic.acoustic()
+    let alert = this.alertCtrl.create();
+    alert.setTitle('Please select your item?');
+
+    this.dataProvider.getData.subscribe((element) => {
+      console.log('element', element)
+      let items = [];
+      element.forEach(item => {
+        alert.addInput({
+          type: 'checkbox',
+          label: item.title,
+          value: item.trackingNum
+        });
+      });
+      alert.addButton('Cancel');
+      alert.addButton({
+        text: 'Okay',
+        handler: (data: any) => {
+          console.log('Checkbox data:', data);
+          this.emailPos(data);
+        }
+      });
+      alert.present();
+    })
+
+  }
+
+  emailPos(trackingNums) {
     this.emailComposer.addAlias('gmail', 'com.google.android.gm');
     this.emailComposer.open({
       app: 'gmail',
       to: 'care@pos.com.my',
       cc: 'lan.psis@gmail.com',
       subject: 'Pos Laju Tracking App',
-      body: 'Send your feedback to care@pos.com.my: ',
+      body: `${trackingNums}`,
       isHtml: true
     });
   }
