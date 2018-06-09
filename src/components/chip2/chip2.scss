@@ -45,10 +45,10 @@ chip2 {
     justify-content: center;
     color: rgba(255, 255, 255, 0.87);
   }
-  .indigo {
-    background-color: #1B2836;
+  .bg {
+    background-color:  map-get($colors, secondary);
   }
-  .pink {
-    background-color: #1C9EED;
+  .icon {
+    background-color:  map-get($colors, light);
   }
 }

@@ -1,58 +1,56 @@
 page-walkthrough {
     .slide1 {
-        background-color: #f6515f;
-        height: 100%;
-        padding: 0;
-        margin: 0;
+        background-color: map-get($colors, primary);
         display: flex;
         justify-content: center;
         align-items: center;
         img {
-            width: 60%;
+            width: 40%;
             height: auto;
         }
         h1 {
+            margin-bottom: 2em;
             font-weight: bold;
-            color: #fff;
+            color: map-get($colors, light);
         }
         p {
-            color: #fff;
+            margin-top: 3em;
+            color: map-get($colors, light);
         }
     }
     .slide2 {
-        background-color: #40CFA4;
-        height: 100%;
+        background-color: map-get($colors, secondary);
         display: flex;
         justify-content: center;
         align-items: center;
         img {
-            width: 60%;
+            width: 50%;
             height: auto;
         }
         h1 {
             font-weight: bold;
-            color: #fff;
+            color: map-get($colors, light);
         }
         p {
-            color: #fff;
+            color: map-get($colors, light);
         }
     }
     .slide3 {
-        background-color: #49C6EE;
+        background-color: map-get($colors, tertiary);
         display: flex;
         justify-content: center;
         align-items: center;
         img {
-            width: 60%;
+            width: 50%;
             height: auto;
-            margin-bottom: 10px;
+            margin-bottom: 1em;
         }
         h1 {
             font-weight: bold;
-            color: #fff;
+            color: map-get($colors, light);
         }
         p {
-            color: #fff;
+            color: map-get($colors, light);
         }
         button {
             display: flex;

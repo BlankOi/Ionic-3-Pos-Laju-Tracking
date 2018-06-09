@@ -3,7 +3,7 @@ import { DeviceFeedback } from '@ionic-native/device-feedback';
 import { Screenshot } from "@ionic-native/screenshot";
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { Storage } from '@ionic/storage';
-import { IonicPage, NavController, NavOptions, NavParams, Platform } from 'ionic-angular';
+import { IonicPage, NavController, NavOptions, NavParams, Platform, LoadingController } from 'ionic-angular';
 
 @IonicPage()
 @Component({
@@ -12,6 +12,7 @@ import { IonicPage, NavController, NavOptions, NavParams, Platform } from 'ionic
 })
 
 export class TrackprogressPage {
+  loader: any;
   lastLoc: any;
   lastDate: any;
   public title: string;
@@ -29,22 +30,26 @@ export class TrackprogressPage {
     public storage: Storage,
     public social: SocialSharing,
     public haptic: DeviceFeedback,
-    public screenshot: Screenshot
+    public screenshot: Screenshot,
+    public loadingCtrl: LoadingController
   ) { }
 
   ionViewDidLoad() {
-    this.title = this.navParams.get('dataObj').title;
-    this.trackNum = this.navParams.get('dataObj').trackingNum;
-    this.dataPos = this.navParams.get('dataObj').data;
-    this.lastItem = this.navParams.get('dataObj').data[0].process.replace(/<[\/]{0,1}(B|b)[^><]*>/g, "");;
-    this.lastDate = this.navParams.get('dataObj').data[0].date;
-    this.lastLoc = this.navParams.get('dataObj').data[0].location;
-    console.log(this.dataPos[0]);
+    if (this.navParams.get('dataObj') != undefined) {
+      this.title = this.navParams.get('dataObj').title;
+      this.trackNum = this.navParams.get('dataObj').trackingNum;
+      this.dataPos = this.navParams.get('dataObj').data;
+      this.lastItem = this.navParams.get('dataObj').data[0].process.replace(/<[\/]{0,1}(B|b)[^><]*>/g, "");;
+      this.lastDate = this.navParams.get('dataObj').data[0].date;
+      this.lastLoc = this.navParams.get('dataObj').data[0].location;
+      console.log(this.dataPos[0]);
+    }
+
   }
 
   ionViewWillLeave() {
     //empty array back to 0
-    this.dataPos.length = 0;
+    this.dataPos = [];
   }
 
   home() {
@@ -54,9 +59,15 @@ export class TrackprogressPage {
       animation: 'slides',
       direction: 'back',
       easing: 'ease-in-out',
-      duration: 300
+      // duration: 200
     }
-    this.navCtrl.setRoot('MainPage', {}, opts);
+    this.loader = this.loadingCtrl.create({
+      spinner: 'dots',
+    });
+    this.loader.present();
+    this.navCtrl.setRoot('MainPage', {}, opts).then(() => {
+      this.loader.dismiss();
+    });
   }
 
   share() {

@@ -1,48 +1,44 @@
 page-homeinfo {
     .wrap {
-        height: 97%;
+        height: 100%;
+    }
+    ion-card-content {
+        padding-top: .1em !important;
     }
     .slide2 {
-        // background-color: map-get($colors, primary );
-        height: 100%;
         display: flex;
         justify-content: center;
         align-items: center;
         img {
-            display: flex;
-            align-items: center;
             margin: 0 auto;
-            width: 70%;
+            width: 65%;
             height: auto;
-            margin-bottom: 40px;
+            margin-bottom: 3em;
         }
         h1 {
             font-weight: bold;
-            margin-bottom: 5px;
+            margin-bottom: .5em;
         }
         p {
             color: map-get($colors, primary);
         }
     }
     .slide3 {
-        // background-color: map-get($colors, primary);
         display: flex;
         justify-content: center;
         align-items: center;
         img {
-            display: flex;
-            align-items: center;
             margin: 0 auto;
-            width: 70%;
+            width: 65%;
             height: auto;
-            margin-bottom: 40px;
+            margin-bottom: 3em;
         }
         h1 {
             font-weight: bold;
-            margin-bottom: 5px;
+            margin-bottom: .5em;
         }
         p {
-            color: #fff;
+            color: map-get($colors, primary);
         }
     }
 }

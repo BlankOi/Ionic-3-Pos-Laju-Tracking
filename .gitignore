@@ -34,3 +34,4 @@ src/private/
 .DS_Store
 Thumbs.db
 UserInterfaceState.xcuserstate
+src/providers/data/constant.ts

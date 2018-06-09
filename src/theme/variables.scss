@@ -22,13 +22,13 @@ $app-direction: ltr;
 // colors so you can add, rename and remove colors as needed.
 // The "primary" color is the only required color in the map.
 $colors: (
-    primary: #1B2836,
-    secondary: #1C9EED,
-    tertiary: #16D38E,
-    danger: #151E29,
+    primary: #161B21,
+    lite-primary: #262A33,
+    secondary: #488BFF,
+    tertiary: #4CE171,
+    danger: #FF4444,
     light: #f4f4f4,
-    delete: #FF4444,
-    dark: #222,
+    lite-dark: rgba(38, 42, 51, 0.34),
 );
 // App iOS Variables
 // --------------------------------------------------
@@ -57,3 +57,4 @@ $colors: (
 @import "noto-sans";
 $item-md-detail-push-show:true;
 $toolbar-md-title-text-color: white;
+$refresher-icon-color:map-get($colors, light);

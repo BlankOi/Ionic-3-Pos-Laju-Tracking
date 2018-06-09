@@ -8,7 +8,7 @@ import { ActionSheetController, AlertController, IonicPage, LoadingController, N
 import { DataProvider } from './../../providers/data/data';
 //pos provider
 import { PosApiProvider } from './../../providers/pos-api/pos-api';
-
+import 'rxjs/add/operator/timeout';
 
 
 
@@ -133,67 +133,103 @@ export class HomePage {
 
     this.showLoading();
 
-    this.pos.getDetail(this.trackingNum).subscribe(result => {
-      this.code = result.code;
+    this.pos.getDetail(this.trackingNum.toUpperCase())
+      .timeout(10000)
+      .subscribe(result => {
+        this.code = result.code;
 
-      // nak amik key data je (list tracking status) dan save dlm trackingStatus array
-      for (var key in result.data) {
-        if (result.data.hasOwnProperty(key)) {
-          this.trackingStatus.push(result.data[key]);
+        // nak amik key data je (list tracking status) dan save dlm trackingStatus array
+        for (var key in result.data) {
+          if (result.data.hasOwnProperty(key)) {
+            this.trackingStatus.push(result.data[key]);
+          }
         }
-      }
+
+        //store semua dalm object
+        this.dataObj = {
+          title: this.title,
+          trackingNum: this.trackingNum.toUpperCase(),
+          data: this.trackingStatus,
+          code: result.code,
+          icon: this.icon
+        }
+        console.log('dataObj:', this.dataObj);
+
+        //nak check code ,204 error, 200 ok, 504 "Server SPR terlalu perlahan."
+        if (result.code == 200) {
+          this.dismissLoading();
+          //save dataObj guna key trackingNum, so retrive guna get()
+          // this.dataObjNew.push(this.dataObj);
+          this.dataProvider.save(this.dataObj);
+          // this.storage.set(this.dataObj.trackingNum, this.dataObj);
+
+          //send data to new HomePage
+          this.navCtrl.push('TrackprogressPage', { 'dataObj': this.dataObj });
 
 
-
-      //store semua dalm object
-      this.dataObj = {
-        title: this.title,
-        trackingNum: this.trackingNum,
-        data: this.trackingStatus,
-        code: result.code,
-        icon: this.icon
-      }
-      console.log('dataObj:', this.dataObj);
-
-      //nak check code ,204 error, 200 ok, 504 "Server SPR terlalu perlahan."
-      if (result.code == 200) {
+        } if (result.code == 204) {
+          this.showPrompt();
+        } if (result.code == 504) {
+          this.showPrompt2();
+        }
+      },
+      error => {
         this.dismissLoading();
-        //save dataObj guna key trackingNum, so retrive guna get()
-        // this.dataObjNew.push(this.dataObj);
-        this.dataProvider.save(this.dataObj);
-        // this.storage.set(this.dataObj.trackingNum, this.dataObj);
-
-        //send data to new HomePage
-        this.navCtrl.push('TrackprogressPage', { 'dataObj': this.dataObj });
-
-
-      } if (result.code == 204) {
-        this.showPrompt();
-      } if (result.code == 504) {
-        this.showPrompt2();
-      }
-    })
+        this.connectionTimeout();
+      })
   }
 
-  //this function will save the tracking number directly
-  saveDraft(){
-    this.haptic.acoustic();
-
+  //code connectionTimeout
+  connectionTimeout() {
     let prompt = this.alertCtrl.create({
-      title: 'Tracking Number Saved',
-      message: ` ${this.title} - ${this.trackingNum}` ,
+      title: 'Connection Timeout.',
+      message: "Please check your internet connection.",
 
       buttons: [
         {
           text: 'Ok',
           handler: data => {
+            this.haptic.acoustic()
+
+            this.dismissLoading();
             prompt.dismiss();
           }
         }
       ]
     });
     prompt.present();
-    
+  }
+
+  //this function will save the tracking number directly
+  saveDraft() {
+    this.haptic.acoustic();
+
+    this.dataObj = {
+      title: this.title,
+      trackingNum: this.trackingNum.toUpperCase(),
+      data: this.trackingStatus,
+      code: 0,
+      icon: this.icon
+    }
+
+    this.dataProvider.save(this.dataObj)
+
+    let prompt = this.alertCtrl.create({
+      title: 'Tracking Number Saved',
+      message: ` ${this.title} - ${this.trackingNum}`,
+
+      buttons: [
+        {
+          text: 'Ok',
+          handler: data => {
+            this.trackingNum = '';
+            prompt.dismiss();
+          }
+        }
+      ]
+    });
+    prompt.present();
+
   }
 
   reset() {

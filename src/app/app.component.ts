@@ -38,11 +38,9 @@ export class MyApp {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
-      statusBar.styleDefault();
       // set status bar to white
-      statusBar.styleLightContent();
-      // backgroundColorByHexString('#f6515f');
-      header.tint("#f6515f");
+      statusBar.backgroundColorByHexString('#161B21');
+      header.tint("#161B21");
       splashScreen.hide();
 
       //check whether user had open the app, if not, set walkthrough
@@ -71,10 +69,8 @@ export class MyApp {
       }
       this.adMobFree.banner.config(bannerConfig);
       const result = await this.adMobFree.banner.prepare();
-      console.log(result);
     }
     catch (e) {
-      console.error(e);
     }
   }
   //ads end

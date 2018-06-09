@@ -19,8 +19,6 @@ import { DataProvider } from '../providers/data/data';
 import { PosApiProvider } from './../providers/pos-api/pos-api';
 import { MyApp } from './app.component';
 
-
-
 @NgModule({
   declarations: [
     MyApp,
@@ -31,7 +29,8 @@ import { MyApp } from './app.component';
     IonicModule.forRoot(MyApp, {
       scrollAssist: false,    // Valid options appear to be [true, false]
       autoFocusAssist: false,  // Valid options appear to be ['instant',
-      pageTransition: 'ios-transition'
+      pageTransition: 'ios-transition',
+      mode: 'ios'
     }),
     IonicStorageModule.forRoot()
   ],
@@ -57,4 +56,4 @@ import { MyApp } from './app.component';
     HeaderColor
   ]
 })
-export class AppModule {}
+export class AppModule { }

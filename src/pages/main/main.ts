@@ -38,9 +38,13 @@ export class MainPage {
   }
 
   ionViewWillEnter() {
+
   }
 
   ionViewDidLoad() {
+    this.dataProvider.observableData.subscribe(data => {
+      console.log('data:', data);
+    })
     this.dataProvider.getData().then((result) => {
       if (result.length > 0) {
         this.hasData = true;
@@ -140,11 +144,11 @@ export class MainPage {
     prompt.present();
   }
   //error 504
-   //code connectionTimeout
-   connectionTimeout() {
+  //code connectionTimeout
+  connectionTimeout() {
     let prompt = this.alertCtrl.create({
       title: 'Connection Timeout.',
-      message: "Please make sure your connection is OK",
+      message: "Please check your internet connection.",
 
       buttons: [
         {
@@ -192,35 +196,35 @@ export class MainPage {
     this.haptic.acoustic()
     this.showLoading();
     this.pos.getDetail(value.trackingNum)
-    .timeout(10000)
-    .subscribe(result => {
-      // nak amik data je
-      for (var key in result.data) {
-        if (result.data.hasOwnProperty(key)) {
-          this.posData.push(result.data[key]);
+      .timeout(10000)
+      .subscribe(result => {
+        // nak amik data je
+        for (var key in result.data) {
+          if (result.data.hasOwnProperty(key)) {
+            this.posData.push(result.data[key]);
+          }
         }
-      }
-      //store semua dalm object
-      this.dataObj = {
-        title: value.title,
-        trackingNum: value.trackingNum,
-        data: this.posData,
-      }
-      //nak check code ,204 error, 200 ok, 504 "Server SPR terlalu perlahan."
-      if (result.code == 200) {
+        //store semua dalm object
+        this.dataObj = {
+          title: value.title,
+          trackingNum: value.trackingNum,
+          data: this.posData,
+        }
+        //nak check code ,204 error, 200 ok, 504 "Server SPR terlalu perlahan."
+        if (result.code == 200) {
+          this.dismissLoading();
+          //send data to TrackprogressPage with dataObj
+          this.navCtrl.push('TrackprogressPage', { 'dataObj': this.dataObj });
+        } if (result.code == 204) {
+          this.showPrompt();
+        } if (result.code == 504) {
+          this.showPrompt2();
+        }
+      },
+      error => {
         this.dismissLoading();
-        //send data to TrackprogressPage with dataObj
-        this.navCtrl.push('TrackprogressPage', { 'dataObj': this.dataObj });
-      } if (result.code == 204) {
-        this.showPrompt();
-      } if (result.code == 504) {
-        this.showPrompt2();
-      }
-    },
-    error => { 
-       this.dismissLoading();
-       this.connectionTimeout();
-    });
+        this.connectionTimeout();
+      });
   }
 
   copy(i, trackingNum) {
