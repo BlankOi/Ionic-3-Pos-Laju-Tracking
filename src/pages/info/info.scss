@@ -1,4 +1,7 @@
 page-info {
+    ion-card-content {
+        padding-top: .1em !important;
+    }
     .logo {
         width: 50%;
         margin: 1em auto 1em auto;
@@ -7,8 +10,5 @@ page-info {
     .info {
         margin: 1em;
         word-wrap: break-word;
-    }
-    .wrap {
-        // height: 90vh;
     }
 }

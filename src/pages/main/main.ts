@@ -42,9 +42,9 @@ export class MainPage {
   }
 
   ionViewDidLoad() {
-    this.dataProvider.observableData.subscribe(data => {
-      console.log('data:', data);
-    })
+    // this.dataProvider.observableData.subscribe(data => {
+    //   console.log('data:', data);
+    // })
     this.dataProvider.getData().then((result) => {
       if (result.length > 0) {
         this.hasData = true;
