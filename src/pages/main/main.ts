@@ -37,8 +37,8 @@ export class MainPage {
     public events: Events
   ) {
     events.subscribe('data:created', (trackNo) => {
-      this.dataProvider.getData.subscribe((result) => {
 
+      this.dataProvider.getData.subscribe((result) => {
         result.forEach(element => {
           this.storedata = {
             title: element.title,
@@ -49,6 +49,12 @@ export class MainPage {
 
         if (this.displayItem.map(element => { return element.trackingNum }).indexOf(trackNo) == -1) {
           this.displayItem.push(this.storedata);
+
+          if (this.displayItem.length > 0) {
+            this.hasData = true;
+          } else {
+            this.hasData = false;
+          }
         }
       });
     });
