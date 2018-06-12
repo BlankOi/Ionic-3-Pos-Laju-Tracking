@@ -13,7 +13,6 @@ import 'rxjs/add/operator/timeout';
   templateUrl: 'main.html',
 })
 export class MainPage {
-
   //nak check ada data ke xde, kalau xde, show div xde data
   private hasData: boolean = false;
   private loader;
@@ -34,7 +33,7 @@ export class MainPage {
     public storage: Storage,
     public clipboard: Clipboard,
     public toast: ToastController,
-    public events: Events
+    public events: Events,
   ) {
     events.subscribe('data:created', (trackNo) => {
 

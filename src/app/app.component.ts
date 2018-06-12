@@ -119,23 +119,27 @@ export class MyApp {
 
     this.dataProvider.getData.subscribe((element) => {
       console.log('element', element)
-      let items = [];
-      element.forEach(item => {
-        alert.addInput({
-          type: 'checkbox',
-          label: item.title,
-          value: item.trackingNum
+      if (element.length != 0) {
+        element.forEach(item => {
+          alert.addInput({
+            type: 'checkbox',
+            label: item.title,
+            value: item.trackingNum
+          });
         });
-      });
-      alert.addButton('Cancel');
-      alert.addButton({
-        text: 'Okay',
-        handler: (data: any) => {
-          console.log('Checkbox data:', data);
-          this.emailPos(data);
-        }
-      });
-      alert.present();
+        alert.addButton('Cancel');
+        alert.addButton({
+          text: 'Okay',
+          handler: (data: any) => {
+            console.log('Checkbox data:', data);
+            this.emailPos(data);
+          }
+        });
+        alert.present();
+      } else {
+        //no data, ask them to add first
+        this.showPrompt()
+      }
     })
 
   }
@@ -147,7 +151,13 @@ export class MyApp {
       to: 'care@pos.com.my',
       cc: 'lan.psis@gmail.com',
       subject: 'Pos Laju Tracking App',
-      body: `${trackingNums}`,
+      body: `
+              1) Tracking number: ${trackingNums}<br>
+              2) Receiver’s Name (Optional):<br>
+              3) Recipient’s Full Address (Optional): <br>
+              4) Receiver’s Contact Number (Optional):<br>
+              5) Item content (Optional):<br>
+            `,
       isHtml: true
     });
   }
@@ -158,8 +168,11 @@ export class MyApp {
     this.emailComposer.open({
       app: 'gmail',
       to: 'lan.psis@gmail.com',
-      subject: 'Pos Laju Tracking App',
-      body: 'Pos Laju Tracking is a free app to help users to track Pos Laju Parcel. Download now at Google Play Store: https://play.google.com/store/apps/details?id=my.mazlan.poslajutracking',
+      subject: 'Pos Laju Tracking App Feedback',
+      body: `Give your feedback about this app. If you find any bugs or error or if u want to request some amazing feautures, please let me know ok. [I'm not working under Pos Laju, I just made this app to make your life easier :) ] 
+      <br><br>
+      Feedback: 
+      `,
       isHtml: true
     });
   }
@@ -173,6 +186,22 @@ export class MyApp {
       chooserTitle: 'Share via...'
     };
     this.social.shareWithOptions(options);
+  }
+
+  //No data
+  showPrompt() {
+    let prompt = this.alertCtrl.create({
+      title: 'No tracking number.',
+      message: "Please add at least one tracking number first to help POS Laju track your parcel easily.",
+      buttons: [
+        {
+          text: 'Ok',
+          handler: data => {
+          }
+        }
+      ]
+    });
+    prompt.present();
   }
 }
 

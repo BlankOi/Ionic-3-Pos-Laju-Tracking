@@ -17,21 +17,19 @@
         <div class="row" text-center>
         </div>
     </div>
-    <div class="trackDetail">
-        <ion-list padding text-nowrap no-lines>
-            <ion-item>
-                <ion-thumbnail item-left>
-                    <img src="assets/lori.png">
-                </ion-thumbnail>
-                <h2>Title: <b>{{title}}</b></h2>
-                <p>Tracking Number</p>
-                <h2>{{trackNum}}</h2>
-                <!-- <h2>
+    <ion-list padding text-nowrap no-lines>
+        <ion-item class="trackDetail">
+            <ion-thumbnail item-left>
+                <img src="assets/lori.png">
+            </ion-thumbnail>
+            <h2>Title: <b>{{title}}</b></h2>
+            <p>Tracking Number</p>
+            <h2>{{trackNum}}</h2>
+            <!-- <h2>
                     <ion-icon name="checkmark-circle" color="secondary"></ion-icon> {{lastItem}}</h2> -->
-            </ion-item>
-        </ion-list>
+        </ion-item>
+    </ion-list>
 
-    </div>
     <div class="main-content">
         <ion-card *ngFor="let pos of dataPos " class="overlap">
             <ion-card-content>
