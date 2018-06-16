@@ -39,21 +39,23 @@ export class MainPage {
     public events: Events,
   ) {
     events.subscribe('data:created', (trackNo) => {
+      console.log('event triggered!');
 
       this.dataProvider.getData.subscribe((result) => {
-        result.forEach(element => {
-          this.storedata = {
-            title: element.title,
-            trackingNum: element.trackingNum,
-            icon: element.icon
-          }
-        });
-
-        if (this.displayItem.map(element => { return element.trackingNum }).indexOf(trackNo) == -1) {
-          this.displayItem.push(this.storedata);
-
-          if (this.displayItem.length > 0) {
+        if (result != undefined && result != null) {
+          if (result.length != 0) {
             this.hasData = true;
+            result.forEach(element => {
+              this.storedata = {
+                title: element.title,
+                trackingNum: element.trackingNum,
+                icon: element.icon
+              }
+            });
+
+            if (this.displayItem.map(element => { return element.trackingNum }).indexOf(trackNo) == -1) {
+              this.displayItem.push(this.storedata);
+            }
           } else {
             this.hasData = false;
           }
@@ -64,21 +66,21 @@ export class MainPage {
 
   ionViewDidLoad() {
     this.dataProvider.getData.subscribe((result) => {
+      console.log('ionViewDidLoad main: result-', result);
       if (result != undefined && result != null) {
-        if (result.length > 0) {
+        if (result.length != 0) {
           this.hasData = true;
+          result.forEach(element => {
+            this.storedata = {
+              title: element.title,
+              trackingNum: element.trackingNum,
+              icon: element.icon
+            }
+            this.displayItem.push(this.storedata);
+          });
         } else {
           this.hasData = false;
         }
-
-        result.forEach(element => {
-          this.storedata = {
-            title: element.title,
-            trackingNum: element.trackingNum,
-            icon: element.icon
-          }
-          this.displayItem.push(this.storedata);
-        });
       }
     })
   }
@@ -87,7 +89,9 @@ export class MainPage {
   doRefresh(refresher) {
     console.log('Begin async operation', refresher);
     setTimeout(() => {
-      this.navCtrl.setRoot(this.navCtrl.getActive().component);
+      this.storage.get('tracking').then(x => {
+        console.log('new', x)
+      })
       console.log('Async operation has ended');
       refresher.complete();
     }, 1500);
@@ -99,13 +103,17 @@ export class MainPage {
       this.iconList = 'checkmark-circle';
     } else {
       this.iconList = 'list';
+      this.storage.set('tracking', this.displayItem).then((x) => {
+        console.log(' main: result-', x);
+        this.displayItem = x;
+      })
     }
   }
 
   filterItems(ev: any) {
     let val = ev.target.value;
 
-    if (this.displayItem.length != 0) {
+    if (this.displayItem != undefined && this.displayItem.length != 0) {
       if (!val) {
         this.dataProvider.getData.subscribe((result) => {
           if (result != undefined && result != null) {
@@ -115,7 +123,7 @@ export class MainPage {
                 trackingNum: element.trackingNum,
                 icon: element.icon
               }
-              if (this.displayItem.map(item=>{return item.trackingNum}).indexOf(element.trackingNum) == -1){
+              if (this.displayItem.map(item => { return item.trackingNum }).indexOf(element.trackingNum) == -1) {
                 return this.displayItem.push(this.storedata);
               }
             });
@@ -126,33 +134,40 @@ export class MainPage {
           return item.title.toLowerCase().includes(val.toLowerCase()) || item.trackingNum.toLowerCase().includes(val.toLowerCase())
         });
       }
-
-
-      // if (item.length !== 0){
-      //   this.displayItem = item;
-      // } else {
-      //   this.dataProvider.getData.subscribe((result) => {
-      //     if (result != undefined && result != null) {
-      //       result.forEach(element => {
-      //         this.storedata = {
-      //           title: element.title,
-      //           trackingNum: element.trackingNum,
-      //           icon: element.icon
-      //         }
-      //         if (this.displayItem.map(element => { return element.trackingNum }).indexOf(result.map(a =>{return a.trackingNum}) == -1)){
-      //           this.displayItem.push(this.storedata);
-      //         }
-      //       });
-      //     }
-      //   })
-      // }
     } else {
       console.log('data xde bro untuk term');
+      this.dataProvider.getData.subscribe((result) => {
+        if (result != undefined && result != null) {
+          result.forEach(element => {
+            this.storedata = {
+              title: element.title,
+              trackingNum: element.trackingNum,
+              icon: element.icon
+            }
+            if (this.displayItem.map(item => { return item.trackingNum }).indexOf(element.trackingNum) == -1) {
+              return this.displayItem.push(this.storedata);
+            }
+          });
+        }
+      })
     }
   }
 
   reorderItems(indexes) {
-    this.displayItem = reorderArray(this.displayItem, indexes);
+    let item: any[] = [];
+
+    console.log('before', this.displayItem)
+    let element = this.displayItem[indexes.from];
+
+    console.log('element', element)
+
+    this.displayItem.splice(indexes.from, 1);
+    console.log('deleted:', this.displayItem)
+
+    this.displayItem.splice(indexes.to, 0, element);
+    console.log('after', this.displayItem)
+
+
   }
 
   //show delete confirmation

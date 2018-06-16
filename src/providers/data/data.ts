@@ -14,14 +14,14 @@ export class DataProvider {
   constructor(public http: Http, public storage: Storage) {
     // this.storage.clear();
     this.getData
-      // this.storage.get('todos')
+      // this.storage.get('tracking')
       .subscribe((result) => {
         this.data = result;
       })
   }
 
   // getData() {
-  //   return this.storage.get('todos')
+  //   return this.storage.get('tracking')
   //   .then((result) => {
   //   // this.data = result;
   //   this.observableData = result;
@@ -29,7 +29,7 @@ export class DataProvider {
   // console.log(' this.observableData', this.observableData)
   // }
 
-  getData: Observable<any> = Observable.fromPromise(this.storage.get('todos').then(data => {
+  getData: Observable<any> = Observable.fromPromise(this.storage.get('tracking').then(data => {
     //maybe some processing logic like JSON.parse(token)
     console.log('observble data:', data);
     return data;
@@ -39,18 +39,22 @@ export class DataProvider {
     // let newData = dataObj;
     console.log('current dataObj=>', dataObj);
     if (!this.data) {
+    console.log('this.data',this.data);
+    
       this.data = [dataObj];
-      this.storage.set('todos', this.data);
+      this.storage.set('tracking', this.data);
     } else {
+    console.log('else this.data',this.data);
+    
       this.data.push(dataObj);
-      this.storage.set('todos', this.data);
+      this.storage.set('tracking', this.data);
     }
   }
 
   delete(index) {
     this.data.splice(index, 1);
-    this.storage.set("todos", this.data);
-    // console.log(this.storage.get('todos'));
+    this.storage.set("tracking", this.data);
+    // console.log(this.storage.get('tracking'));
   }
 
 }
