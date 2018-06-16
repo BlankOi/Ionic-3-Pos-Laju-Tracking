@@ -6,6 +6,7 @@ import { AlertController, IonicPage, LoadingController, ModalController, NavCont
 import { DataProvider } from './../../providers/data/data';
 import { PosApiProvider } from './../../providers/pos-api/pos-api';
 import 'rxjs/add/operator/timeout';
+import { reorderArray } from 'ionic-angular';
 
 @IonicPage()
 @Component({
@@ -16,8 +17,10 @@ export class MainPage {
   //nak check ada data ke xde, kalau xde, show div xde data
   private hasData: boolean = false;
   private loader;
+  flag: any = false;
+  iconList: string = 'list';
   private displayItem: any[] = [];
-  private storedata: { title: string, trackingNum: string, icon: string };
+  public storedata: { title: string, trackingNum: string, icon: string };
   private posData: any[] = [];
   //declare dataObject
   private dataObj: { title: string; trackingNum: string; data: any[]; };
@@ -89,7 +92,68 @@ export class MainPage {
       refresher.complete();
     }, 1500);
   }
-  //pull to refresh end
+
+  actionBtn() {
+    this.flag = !this.flag;
+    if (this.flag) {
+      this.iconList = 'checkmark-circle';
+    } else {
+      this.iconList = 'list';
+    }
+  }
+
+  filterItems(ev: any) {
+    let val = ev.target.value;
+
+    if (this.displayItem.length != 0) {
+      if (!val) {
+        this.dataProvider.getData.subscribe((result) => {
+          if (result != undefined && result != null) {
+            result.forEach(element => {
+              this.storedata = {
+                title: element.title,
+                trackingNum: element.trackingNum,
+                icon: element.icon
+              }
+              if (this.displayItem.map(item=>{return item.trackingNum}).indexOf(element.trackingNum) == -1){
+                return this.displayItem.push(this.storedata);
+              }
+            });
+          }
+        })
+      } else {
+        this.displayItem = this.displayItem.filter(item => {
+          return item.title.toLowerCase().includes(val.toLowerCase()) || item.trackingNum.toLowerCase().includes(val.toLowerCase())
+        });
+      }
+
+
+      // if (item.length !== 0){
+      //   this.displayItem = item;
+      // } else {
+      //   this.dataProvider.getData.subscribe((result) => {
+      //     if (result != undefined && result != null) {
+      //       result.forEach(element => {
+      //         this.storedata = {
+      //           title: element.title,
+      //           trackingNum: element.trackingNum,
+      //           icon: element.icon
+      //         }
+      //         if (this.displayItem.map(element => { return element.trackingNum }).indexOf(result.map(a =>{return a.trackingNum}) == -1)){
+      //           this.displayItem.push(this.storedata);
+      //         }
+      //       });
+      //     }
+      //   })
+      // }
+    } else {
+      console.log('data xde bro untuk term');
+    }
+  }
+
+  reorderItems(indexes) {
+    this.displayItem = reorderArray(this.displayItem, indexes);
+  }
 
   //show delete confirmation
   showConfirm(index, title) {

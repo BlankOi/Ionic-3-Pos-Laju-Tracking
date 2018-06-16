@@ -9,16 +9,25 @@
             <button ion-button icon-left color="light" (click)="presentModal()">
               <ion-icon name="information-circle"></ion-icon>
             </button>
+            <button ion-button icon-left color="light" (click)="actionBtn()">
+                <ion-icon name={{iconList}}></ion-icon>
+          </button>
         </ion-buttons>
     </ion-navbar>
-
+    <ion-searchbar
+    [(ngModel)]="myInput"
+    [showCancelButton]="shouldShowCancel"
+    (ionInput)="filterItems($event)"
+    (ionCancel)="onCancel($event)">
+  </ion-searchbar>
 </ion-header>
 
 
 <ion-content class="bg2">
-    <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher (ionRefresh)="doRefresh($event)" *ngIf="flag == false">
         <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
+   
     <div class="nodata" [hidden]="hasData" text-center>
         <div class="img-lori">
             <img src="assets/lori.png" alt="lori">
@@ -26,7 +35,7 @@
             <p>Tap on the + symbol to get started or pull down to refresh</p>
         </div>
     </div>
-    <ion-list padding no-lines>
+    <ion-list padding no-lines reorder={{flag}} (ionItemReorder)="reorderItems($event)">
         <ion-item-sliding *ngFor="let data of displayItem;  let i = index">
             <ion-item (tap)="trackDetail(data)" detail-push>
                 <ion-icon item-start [name]="data.icon"></ion-icon>

@@ -16,7 +16,7 @@ import 'rxjs/add/operator/timeout';
   templateUrl: 'home.html'
 })
 export class HomePage {
-  trackingNumDB: any[];
+  trackingNumDB: any[] = [];
 
   dataObj: {
     title: string;
@@ -61,6 +61,8 @@ export class HomePage {
       if (result != undefined && result != null) {
         this.trackingNumDB = result;
         console.log("data from db:", this.trackingNumDB)
+      } else {
+        this.trackingNumDB = [];
       }
     })
   }
@@ -79,53 +81,54 @@ export class HomePage {
   getTracking() {
     this.haptic.acoustic()
     this.showLoading();
-
-    if (this.trackingNumDB.map(element => { return element.trackingNum }).indexOf(this.trackingNum.toUpperCase()) == -1) {
-      this.pos.getDetail(this.trackingNum.toUpperCase())
-        .timeout(10000)
-        .subscribe(result => {
-          this.code = result.code;
-
-          // nak amik key data je (list tracking status) dan save dlm trackingStatus array
-          for (var key in result.data) {
-            if (result.data.hasOwnProperty(key)) {
-              this.trackingStatus.push(result.data[key]);
+    if (this.trackingNumDB != null && this.trackingNumDB != undefined){
+      if (this.trackingNumDB.map(element => { return element.trackingNum }).indexOf(this.trackingNum.toUpperCase().replace(/\s/g, "")) == -1) {
+        this.pos.getDetail(this.trackingNum.toUpperCase().replace(/\s/g, ""))
+          .timeout(10000)
+          .subscribe(result => {
+            this.code = result.code;
+  
+            // nak amik key data je (list tracking status) dan save dlm trackingStatus array
+            for (var key in result.data) {
+              if (result.data.hasOwnProperty(key)) {
+                this.trackingStatus.push(result.data[key]);
+              }
             }
-          }
-
-          //store semua dalm object
-          this.dataObj = {
-            title: this.title,
-            trackingNum: this.trackingNum.toUpperCase(),
-            data: this.trackingStatus,
-            code: result.code,
-            icon: this.icon
-          }
-          console.log('dataObj:', this.dataObj);
-
-          //nak check code ,204 error, 200 ok, 504 "Server terlalu perlahan."
-          if (result.code == 200) {
+  
+            //store semua dalm object
+            this.dataObj = {
+              title: this.title,
+              trackingNum: this.trackingNum.toUpperCase().replace(/\s/g, ""),
+              data: this.trackingStatus,
+              code: result.code,
+              icon: this.icon
+            }
+            console.log('dataObj:', this.dataObj);
+  
+            //nak check code ,204 error, 200 ok, 504 "Server terlalu perlahan."
+            if (result.code == 200) {
+              this.dismissLoading();
+              //save dataObj guna key trackingNum, so retrive guna get()
+              // this.dataObjNew.push(this.dataObj);
+              this.dataProvider.save(this.dataObj);
+  
+              //send data to TrackprogressPage
+              this.navCtrl.push('TrackprogressPage', { 'dataObj': this.dataObj });
+  
+            } if (result.code == 204) {
+              this.showPrompt();
+            } if (result.code == 504) {
+              this.showPrompt2();
+            }
+          },
+          error => {
             this.dismissLoading();
-            //save dataObj guna key trackingNum, so retrive guna get()
-            // this.dataObjNew.push(this.dataObj);
-            this.dataProvider.save(this.dataObj);
-
-            //send data to TrackprogressPage
-            this.navCtrl.push('TrackprogressPage', { 'dataObj': this.dataObj });
-
-          } if (result.code == 204) {
-            this.showPrompt();
-          } if (result.code == 504) {
-            this.showPrompt2();
-          }
-        },
-        error => {
-          this.dismissLoading();
-          this.connectionTimeout();
-        })
-    } else {
-      console.log('data exist');
-      this.dataExist();
+            this.connectionTimeout();
+          })
+      } else {
+        console.log('data exist');
+        this.dataExist();
+      }
     }
   }
 
@@ -133,10 +136,10 @@ export class HomePage {
   saveDraft() {
     this.haptic.acoustic();
 
-    if (this.trackingNumDB.map(element => { return element.trackingNum }).indexOf(this.trackingNum.toUpperCase()) == -1) {
+    if (this.trackingNumDB.map(element => { return element.trackingNum }).indexOf(this.trackingNum.toUpperCase().replace(/\s/g, "")) == -1) {
       this.dataObj = {
         title: this.title,
-        trackingNum: this.trackingNum.toUpperCase(),
+        trackingNum: this.trackingNum.toUpperCase().replace(/\s/g, ""),
         data: this.trackingStatus,
         code: 0,
         icon: this.icon
