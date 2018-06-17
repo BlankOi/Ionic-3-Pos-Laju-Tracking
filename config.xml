@@ -43,6 +43,7 @@
         <splash density="port-xhdpi" src="resources/android/splash/drawable-port-xhdpi-screen.png" />
         <splash density="port-xxhdpi" src="resources/android/splash/drawable-port-xxhdpi-screen.png" />
         <splash density="port-xxxhdpi" src="resources/android/splash/drawable-port-xxxhdpi-screen.png" />
+        <resource-file src="google-services.json" target="google-services.json" />
     </platform>
     <platform name="ios">
         <allow-intent href="itms:*" />
@@ -100,6 +101,10 @@
     <plugin name="cordova-plugin-headercolor" spec="^1.0.0" />
     <plugin name="com.darktalker.cordova.screenshot" spec="^0.1.6" />
     <plugin name="cordova-clipboard" spec="^1.1.1" />
-    <engine name="android" spec="6.3.0" />
     <allow-navigation href="http://192.168.43.40:8100" />
+    <plugin name="phonegap-plugin-push" spec="^2.1.3">
+        <variable name="SENDER_ID" value="447792138736" />
+        <variable name="FCM_VERSION" value="11.6.2" />
+    </plugin>
+    <engine name="android" spec="6.3.0" />
 </widget>

@@ -98,6 +98,8 @@ export class MainPage {
   }
 
   actionBtn() {
+    this.haptic.acoustic()
+    
     this.flag = !this.flag;
     if (this.flag) {
       this.iconList = 'checkmark-circle';

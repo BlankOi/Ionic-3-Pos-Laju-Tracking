@@ -12,6 +12,7 @@ import { Storage } from "@ionic/storage";
 import { App, Events, Platform, AlertController } from 'ionic-angular';
 import { KEYS } from "../private/constant";
 import { DataProvider } from '../providers/data/data';
+import { Push, PushObject, PushOptions } from '@ionic-native/push';
 
 @Component({
   templateUrl: 'app.html'
@@ -36,6 +37,7 @@ export class MyApp {
     public storage: Storage,
     public header: HeaderColor,
     public alertCtrl: AlertController,
+    private push: Push
   ) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
@@ -56,11 +58,43 @@ export class MyApp {
       });
 
       this.showBannerAd();
+      this.pushSetup();
     });
   }
 
   ionViewDidLoad() {
 
+  }
+
+  //push noti
+  pushSetup() {
+    // to initialize push notifications
+
+    const options: PushOptions = {
+      android: {
+        senderID: '447792138736',
+        sound: true,
+        vibrate: true,
+        forceShow: true,
+        icon: 'noti'
+      }
+    };
+
+    const pushObject: PushObject = this.push.init(options);
+
+    pushObject.on('notification').subscribe((notification: any) => {
+      if (notification.additionalData.foreground) {
+        let youralert = this.alertCtrl.create({
+          title: 'New Push notification',
+          message: notification.message
+        });
+        youralert.present();
+      }
+    });
+
+    pushObject.on('registration').subscribe((registration: any) => console.log('Device registered', registration));
+
+    pushObject.on('error').subscribe(error => console.error('Error with Push plugin', error));
   }
 
   //ads

@@ -18,6 +18,7 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { DataProvider } from '../providers/data/data';
 import { PosApiProvider } from './../providers/pos-api/pos-api';
 import { MyApp } from './app.component';
+import { Push } from '@ionic-native/push';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { MyApp } from './app.component';
     DeviceFeedback,
     Clipboard,
     Screenshot,
-    HeaderColor
+    HeaderColor,
+    Push
   ]
 })
 export class AppModule { }

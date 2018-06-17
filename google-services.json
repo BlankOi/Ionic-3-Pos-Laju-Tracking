@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "447792138736",
+    "firebase_url": "https://poslajutracking-5a566.firebaseio.com",
+    "project_id": "poslajutracking-5a566",
+    "storage_bucket": "poslajutracking-5a566.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:447792138736:android:d4dcb190be222997",
+        "android_client_info": {
+          "package_name": "my.mazlan.poslajutracking"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "447792138736-rn0o3u7cdbtd22jl9s0oj0qmuejc81pk.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "447792138736-rn0o3u7cdbtd22jl9s0oj0qmuejc81pk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCYqy6iiAOI5MUFuZc7kgMmlALdSt-jUiM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
