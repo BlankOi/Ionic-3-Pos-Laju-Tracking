@@ -43,4 +43,8 @@
         .content.has-refresher .fixed-content {
             border-top: 0;
         }
+
+        ion-reorder{
+            color: map-get($colors, danger);
+        }
     }

@@ -9,13 +9,14 @@
             <button ion-button icon-left color="light" (click)="presentModal()">
               <ion-icon name="information-circle"></ion-icon>
             </button>
-            <button ion-button icon-left color="light" (click)="actionBtn()">
+            <button ion-button icon-left color="{{flag?'secondary':'light'}}" (click)="actionBtn()">
                 <ion-icon name={{iconList}}></ion-icon>
           </button>
         </ion-buttons>
     </ion-navbar>
     <ion-searchbar
     [(ngModel)]="myInput"
+    placeholder="Title | TrackingNo"
     [showCancelButton]="shouldShowCancel"
     (ionInput)="filterItems($event)"
     (ionCancel)="onCancel($event)">
@@ -48,7 +49,7 @@
             <ion-item-options>
                 <button ion-button color="secondary" expandable icon-start (tap)="copy(i,data.trackingNum)">
                     <ion-icon name="copy"></ion-icon>
-                    COPY
+                    Copy
                 </button>
                 <button ion-button color="danger" expandable icon-start (tap)="delete(i,data.title)">
                     <ion-icon name="trash"></ion-icon>

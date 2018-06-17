@@ -36,8 +36,8 @@ $app-direction: ltr;
 $colors: (
     primary: #F6515F,
     lite-primary: #262A33,
-    secondary: #488BFF,
-    tertiary: #4CE171,
+    secondary: #4CE171,
+    tertiary: #488BFF,
     danger: #FF4444,
     light: #f4f4f4,
     lite-dark: rgba(38, 42, 51, 0.34),
@@ -70,3 +70,4 @@ $colors: (
 $item-md-detail-push-show:true;
 $toolbar-md-title-text-color: white;
 $refresher-icon-color:map-get($colors, light);
+$item-ios-detail-push-color:map-get($colors, primary);

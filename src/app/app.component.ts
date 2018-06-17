@@ -41,8 +41,8 @@ export class MyApp {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       // set status bar to white
-      statusBar.backgroundColorByHexString('#161B21');
-      header.tint("#161B21");
+      statusBar.backgroundColorByHexString('#F6515F');
+      header.tint("#F6515F");
       splashScreen.hide();
 
       //check whether user had open the app, if not, set walkthrough
@@ -145,17 +145,25 @@ export class MyApp {
   }
 
   emailPos(trackingNums) {
+    let test = `
+      ${trackingNums.map((item, i) => `
+      <ul>
+        <li>&#8226; <b>${item}</b></li>
+        </ul>
+      `).join('')}
+    `
     this.emailComposer.addAlias('gmail', 'com.google.android.gm');
     this.emailComposer.open({
       app: 'gmail',
       to: 'care@pos.com.my',
       cc: 'lan.psis@gmail.com',
       subject: 'Pos Laju Tracking App',
-      body: `
-              1) Tracking number: ${trackingNums}<br>
-              2) Receiver’s Name (Optional):<br>
-              3) Recipient’s Full Address (Optional): <br>
-              4) Receiver’s Contact Number (Optional):<br>
+      body: `1) Tracking number: 
+             ${test}
+              <br>
+              2) Receiver’s Name:<br>
+              3) Recipient’s Full Address: <br>
+              4) Receiver’s Contact Number:<br>
               5) Item content (Optional):<br>
             `,
       isHtml: true
@@ -169,7 +177,8 @@ export class MyApp {
       app: 'gmail',
       to: 'lan.psis@gmail.com',
       subject: 'Pos Laju Tracking App Feedback',
-      body: `Give your feedback about this app. If you find any bugs or error or if u want to request some amazing feautures, please let me know ok. [I'm not working under Pos Laju, I just made this app to make your life easier :) ] 
+      body: `Give your feedback about this app. If you find any bugs or error or if u want to request some amazing feautures, please let me know ok. 
+      <br>*I'm not working under Pos Laju, I just made this app to make your life easier :)  
       <br><br>
       Feedback: 
       `,

@@ -6,7 +6,6 @@ import { AlertController, IonicPage, LoadingController, ModalController, NavCont
 import { DataProvider } from './../../providers/data/data';
 import { PosApiProvider } from './../../providers/pos-api/pos-api';
 import 'rxjs/add/operator/timeout';
-import { reorderArray } from 'ionic-angular';
 
 @IonicPage()
 @Component({
@@ -19,6 +18,7 @@ export class MainPage {
   private loader;
   flag: any = false;
   iconList: string = 'list';
+  myInput: string;
   private displayItem: any[] = [];
   public storedata: { title: string, trackingNum: string, icon: string };
   private posData: any[] = [];
@@ -112,49 +112,44 @@ export class MainPage {
 
   filterItems(ev: any) {
     let val = ev.target.value;
-
-    if (this.displayItem != undefined && this.displayItem.length != 0) {
-      if (!val) {
+    console.log('val',this.myInput)
+    
+    // if (this.displayItem != undefined && this.displayItem.length != 0) {
+      if (!this.myInput) {  
+        console.log('no val', this.myInput)
         this.dataProvider.getData.subscribe((result) => {
           if (result != undefined && result != null) {
-            result.forEach(element => {
-              this.storedata = {
-                title: element.title,
-                trackingNum: element.trackingNum,
-                icon: element.icon
-              }
-              if (this.displayItem.map(item => { return item.trackingNum }).indexOf(element.trackingNum) == -1) {
-                return this.displayItem.push(this.storedata);
-              }
-            });
+             this.displayItem = result;
+
+            console.log('this.displayItem',this.displayItem)
+             return this.displayItem;
+            // result.forEach(element => {
+            //   this.storedata = {
+            //     title: element.title,
+            //     trackingNum: element.trackingNum,
+            //     icon: element.icon
+            //   }
+            //   this.displayItem = [];
+            //   // if (this.displayItem.map(item => { return item.trackingNum }).indexOf(element.trackingNum) == -1) {
+            //     return this.displayItem.push(this.storedata);
+            //   // }
+            // });
           }
         })
+        // this.storage.get('tracking').then(x => {
+        //   console.log('new', x)
+        //   this.displayItem = x;
+        // })
       } else {
+        console.log('val',this.myInput)
         this.displayItem = this.displayItem.filter(item => {
           return item.title.toLowerCase().includes(val.toLowerCase()) || item.trackingNum.toLowerCase().includes(val.toLowerCase())
         });
       }
-    } else {
-      console.log('data xde bro untuk term');
-      this.dataProvider.getData.subscribe((result) => {
-        if (result != undefined && result != null) {
-          result.forEach(element => {
-            this.storedata = {
-              title: element.title,
-              trackingNum: element.trackingNum,
-              icon: element.icon
-            }
-            if (this.displayItem.map(item => { return item.trackingNum }).indexOf(element.trackingNum) == -1) {
-              return this.displayItem.push(this.storedata);
-            }
-          });
-        }
-      })
-    }
+    // }
   }
 
   reorderItems(indexes) {
-    let item: any[] = [];
 
     console.log('before', this.displayItem)
     let element = this.displayItem[indexes.from];
