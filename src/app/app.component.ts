@@ -76,7 +76,8 @@ export class MyApp {
         sound: true,
         vibrate: true,
         forceShow: true,
-        icon: 'noti'
+        icon: 'noti',
+        iconColor: 'red'
       }
     };
 
