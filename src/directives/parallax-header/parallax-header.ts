@@ -7,7 +7,7 @@ import { Directive, ElementRef, Renderer } from '@angular/core';
     '(window:resize)': 'onWindowResize($event)'
   }
 })
-  
+
 export class ParallaxHeaderDirective {
   header: any;
   headerHeight: any;
@@ -53,7 +53,7 @@ export class ParallaxHeaderDirective {
       this.translateAmt = 0;
       this.scaleAmt = -ev.scrollTop / this.headerHeight + 1;
     }
-  
+
     this.renderer.setElementStyle(this.header, 'webkitTransform', 'translate3d(0,' + this.translateAmt + 'px,0) scale(' + this.scaleAmt + ',' + this.scaleAmt + ')');
 
   }

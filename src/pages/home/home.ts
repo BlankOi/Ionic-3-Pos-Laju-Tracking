@@ -4,10 +4,18 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { DeviceFeedback } from '@ionic-native/device-feedback';
 //IonicStorageModule
 import { Storage } from '@ionic/storage';
-import { ActionSheetController, AlertController, IonicPage, LoadingController, NavController, ToastController, Events } from 'ionic-angular';
-import { DataProvider } from './../../providers/data/data';
+import {
+  ActionSheetController,
+  AlertController,
+  Events,
+  IonicPage,
+  LoadingController,
+  NavController,
+  ToastController
+} from 'ionic-angular';
+import { DataProvider } from '../../providers/data/data';
 //pos provider
-import { PosApiProvider } from './../../providers/pos-api/pos-api';
+import { PosApiProvider } from '../../providers/pos-api/pos-api';
 import 'rxjs/add/operator/timeout';
 
 @IonicPage()
@@ -39,7 +47,8 @@ export class HomePage {
   public title: string;
   public code: number;
   public icon: string = 'basket';
-
+  //loader start
+  public loader;
 
   constructor(
     public navCtrl: NavController,
@@ -69,7 +78,7 @@ export class HomePage {
 
   //BarcodeScanner
   scan() {
-    this.haptic.acoustic()
+    this.haptic.acoustic();
     this.barcode.scan().then((barcodeData) => {
       this.trackingNum = barcodeData.text;
     }, (err) => {
@@ -79,52 +88,56 @@ export class HomePage {
 
   //track button
   getTracking() {
-    this.haptic.acoustic()
+    this.haptic.acoustic();
     this.showLoading();
-    if (this.trackingNumDB != null && this.trackingNumDB != undefined){
-      if (this.trackingNumDB.map(element => { return element.trackingNum }).indexOf(this.trackingNum.toUpperCase().replace(/\s/g, "")) == -1) {
+    if (this.trackingNumDB != null && this.trackingNumDB != undefined) {
+      if (this.trackingNumDB.map(element => {
+        return element.trackingNum
+      }).indexOf(this.trackingNum.toUpperCase().replace(/\s/g, "")) == -1) {
         this.pos.getDetail(this.trackingNum.toUpperCase().replace(/\s/g, ""))
           .timeout(10000)
           .subscribe(result => {
-            this.code = result.code;
-  
-            // nak amik key data je (list tracking status) dan save dlm trackingStatus array
-            for (var key in result.data) {
-              if (result.data.hasOwnProperty(key)) {
-                this.trackingStatus.push(result.data[key]);
+              this.code = result.code;
+
+              // nak amik key data je (list tracking status) dan save dlm trackingStatus array
+              for (let key in result.data) {
+                if (result.data.hasOwnProperty(key)) {
+                  this.trackingStatus.push(result.data[key]);
+                }
               }
-            }
-  
-            //store semua dalm object
-            this.dataObj = {
-              title: this.title,
-              trackingNum: this.trackingNum.toUpperCase().replace(/\s/g, ""),
-              data: this.trackingStatus,
-              code: result.code,
-              icon: this.icon
-            }
-            console.log('dataObj:', this.dataObj);
-  
-            //nak check code ,204 error, 200 ok, 504 "Server terlalu perlahan."
-            if (result.code == 200) {
+
+              //store semua dalm object
+              this.dataObj = {
+                title: this.title,
+                trackingNum: this.trackingNum.toUpperCase().replace(/\s/g, ""),
+                data: this.trackingStatus,
+                code: result.code,
+                icon: this.icon
+              };
+              console.log('dataObj:', this.dataObj);
+
+              //nak check code ,204 error, 200 ok, 504 "Server terlalu perlahan."
+              if (result.code == 200) {
+                this.dismissLoading();
+                //save dataObj guna key trackingNum, so retrive guna get()
+                // this.dataObjNew.push(this.dataObj);
+                this.dataProvider.save(this.dataObj);
+
+                //send data to TrackprogressPage
+                this.navCtrl.push('TrackprogressPage', {'dataObj': this.dataObj});
+
+              }
+              if (result.code == 204) {
+                this.showPrompt();
+              }
+              if (result.code == 504) {
+                this.showPrompt2();
+              }
+            },
+            error => {
               this.dismissLoading();
-              //save dataObj guna key trackingNum, so retrive guna get()
-              // this.dataObjNew.push(this.dataObj);
-              this.dataProvider.save(this.dataObj);
-  
-              //send data to TrackprogressPage
-              this.navCtrl.push('TrackprogressPage', { 'dataObj': this.dataObj });
-  
-            } if (result.code == 204) {
-              this.showPrompt();
-            } if (result.code == 504) {
-              this.showPrompt2();
-            }
-          },
-          error => {
-            this.dismissLoading();
-            this.connectionTimeout();
-          })
+              this.connectionTimeout();
+            })
       } else {
         console.log('data exist');
         this.dataExist();
@@ -136,16 +149,18 @@ export class HomePage {
   saveDraft() {
     this.haptic.acoustic();
 
-    if (this.trackingNumDB.map(element => { return element.trackingNum }).indexOf(this.trackingNum.toUpperCase().replace(/\s/g, "")) == -1) {
+    if (this.trackingNumDB.map(element => {
+      return element.trackingNum
+    }).indexOf(this.trackingNum.toUpperCase().replace(/\s/g, "")) == -1) {
       this.dataObj = {
         title: this.title,
         trackingNum: this.trackingNum.toUpperCase().replace(/\s/g, ""),
         data: this.trackingStatus,
         code: 0,
         icon: this.icon
-      }
+      };
 
-      this.dataProvider.save(this.dataObj)
+      this.dataProvider.save(this.dataObj);
 
       let prompt = this.alertCtrl.create({
         title: 'Tracking Number Saved',
@@ -156,7 +171,7 @@ export class HomePage {
             handler: data => {
               this.trackingNum = '';
               this.title = '';
-              this.events.publish('data:created', this.trackingNum.toUpperCase())
+              this.events.publish('data:created', this.trackingNum.toUpperCase());
               prompt.dismiss();
             }
           }
@@ -171,8 +186,6 @@ export class HomePage {
 
   }
 
-  //loader start
-  public loader;
   showLoading() {
     this.loader = this.loadingCtrl.create({
       content: 'Checking...'
@@ -251,7 +264,7 @@ export class HomePage {
         {
           text: 'Ok',
           handler: data => {
-            this.haptic.acoustic()
+            this.haptic.acoustic();
 
             this.dismissLoading();
             prompt.dismiss();
@@ -263,7 +276,7 @@ export class HomePage {
   }
 
   reset() {
-    this.haptic.acoustic()
+    this.haptic.acoustic();
 
     this.trackingStatus = [];
     this.trackingNum = '';

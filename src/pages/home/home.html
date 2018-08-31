@@ -1,45 +1,45 @@
 <ion-header>
-    <ion-navbar color="primary">
-        <ion-title>
-            Add Shipment
-        </ion-title>
+  <ion-navbar color="primary">
+    <ion-title>
+      Add Shipment
+    </ion-title>
 
-    </ion-navbar>
+  </ion-navbar>
 </ion-header>
 
 <ion-content class="bg2">
-    <div class="header-content">
-        <div class="header-img">
-            <img src="assets/orang.png" alt="bground">
-        </div>
-
-        <ion-row>
-            <ion-col col-12>
-                <ion-item>
-                    <ion-label>
-                        <ion-icon name="barcode"></ion-icon>
-                    </ion-label>
-                    <ion-input type="text" placeholder="Tracking Number" [(ngModel)]="trackingNum"></ion-input>
-                    <button ion-button clear (click)="scan()" item-right>
-                        <ion-icon name="camera"></ion-icon>
-                    </button>
-                </ion-item>
-                <ion-item class="title-place">
-                    <ion-input type="text" placeholder="Title...Category" [(ngModel)]="title"></ion-input>
-                    <button ion-button (click)="iconSelect()" item-right clear>
-                        <ion-icon name="pricetag"></ion-icon>
-                    </button>
-                </ion-item>
-            </ion-col>
-        </ion-row>
-
-        <ion-row>
-            <ion-col col-6>
-                <button ion-button block (click)="saveDraft()" color="tertiary" [disabled]="!trackingNum">Save</button>
-            </ion-col>
-            <ion-col col-6>
-                <button ion-button block (click)="getTracking()" color="secondary" [disabled]="!trackingNum">Track</button>
-            </ion-col>
-        </ion-row>
+  <div class="header-content">
+    <div class="header-img">
+      <img src="assets/orang.png" alt="bground">
     </div>
+
+    <ion-row>
+      <ion-col col-12>
+        <ion-item>
+          <ion-label>
+            <ion-icon name="barcode"></ion-icon>
+          </ion-label>
+          <ion-input type="text" placeholder="Tracking Number" [(ngModel)]="trackingNum"></ion-input>
+          <button ion-button clear (click)="scan()" item-right>
+            <ion-icon name="camera"></ion-icon>
+          </button>
+        </ion-item>
+        <ion-item class="title-place">
+          <ion-input type="text" placeholder="Title...Category" [(ngModel)]="title"></ion-input>
+          <button ion-button (click)="iconSelect()" item-right clear>
+            <ion-icon name="pricetag"></ion-icon>
+          </button>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col col-6>
+        <button ion-button block (click)="saveDraft()" color="tertiary" [disabled]="!trackingNum">Save</button>
+      </ion-col>
+      <ion-col col-6>
+        <button ion-button block (click)="getTracking()" color="secondary" [disabled]="!trackingNum">Track</button>
+      </ion-col>
+    </ion-row>
+  </div>
 </ion-content>

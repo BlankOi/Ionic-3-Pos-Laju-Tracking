@@ -1,20 +1,20 @@
 <ion-header>
 
-    <ion-navbar color="primary">
-        <button ion-button menuToggle>
-            <ion-icon name="menu"></ion-icon>
-        </button>
-        <ion-title>Pos Laju Tracking System</ion-title>
-        <ion-buttons end>
-            <button ion-button icon-left color="light" (click)="presentModal()">
-              <ion-icon name="information-circle"></ion-icon>
-            </button>
-            <button ion-button icon-left color="{{flag?'secondary':'light'}}" (click)="actionBtn()">
-                <ion-icon name={{iconList}}></ion-icon>
-          </button>
-        </ion-buttons>
-    </ion-navbar>
-    <ion-searchbar
+  <ion-navbar color="primary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Pos Laju Tracking System</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-left color="light" (click)="presentModal()">
+        <ion-icon name="information-circle"></ion-icon>
+      </button>
+      <button ion-button icon-left color="{{flag?'secondary':'light'}}" (click)="actionBtn()">
+        <ion-icon name={{iconList}}></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+  <ion-searchbar
     [(ngModel)]="myInput"
     placeholder="Title | TrackingNo"
     [showCancelButton]="shouldShowCancel"
@@ -25,44 +25,44 @@
 
 
 <ion-content class="bg2">
-    <ion-refresher (ionRefresh)="doRefresh($event)" *ngIf="flag == false">
-        <ion-refresher-content></ion-refresher-content>
-    </ion-refresher>
-   
-    <div class="nodata" [hidden]="hasData" text-center>
-        <div class="img-lori">
-            <img src="assets/lori.png" alt="lori">
-            <h2>No shipping record</h2>
-            <p>Tap on the + symbol to get started or pull down to refresh</p>
-        </div>
-    </div>
-    <ion-list padding no-lines reorder={{flag}} (ionItemReorder)="reorderItems($event)">
-        <ion-item-sliding *ngFor="let data of displayItem;  let i = index">
-            <ion-item (tap)="trackDetail(data)" detail-push>
-                <ion-icon item-start [name]="data.icon"></ion-icon>
-                <h2 class="title">
-                    <ion-icon name="checkmark-circle" color="secondary"></ion-icon>
-                    <b>{{data.title}}</b>
-                </h2>
-                <p>{{data.trackingNum}}</p>
-            </ion-item>
-            <ion-item-options>
-                <button ion-button color="secondary" expandable icon-start (tap)="copy(i,data.trackingNum)">
-                    <ion-icon name="copy"></ion-icon>
-                    Copy
-                </button>
-                <button ion-button color="danger" expandable icon-start (tap)="delete(i,data.title)">
-                    <ion-icon name="trash"></ion-icon>
-                    Delete
-                </button>
-            </ion-item-options>
-        </ion-item-sliding>
-    </ion-list>
+  <ion-refresher (ionRefresh)="doRefresh($event)" *ngIf="flag == false">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
 
-    <ion-fab right bottom>
-        <button ion-fab color="secondary" (click)="addTracking()">
-            <ion-icon name="add"></ion-icon>
+  <div class="nodata" [hidden]="hasData" text-center>
+    <div class="img-lori">
+      <img src="assets/lori.png" alt="lori">
+      <h2>No shipping record</h2>
+      <p>Tap on the + symbol to get started or pull down to refresh</p>
+    </div>
+  </div>
+  <ion-list padding no-lines reorder={{flag}} (ionItemReorder)="reorderItems($event)">
+    <ion-item-sliding *ngFor="let data of displayItem;  let i = index">
+      <ion-item (tap)="trackDetail(data)" detail-push>
+        <ion-icon item-start [name]="data.icon"></ion-icon>
+        <h2 class="title">
+          <ion-icon name="checkmark-circle" color="secondary"></ion-icon>
+          <b>{{data.title}}</b>
+        </h2>
+        <p>{{data.trackingNum}}</p>
+      </ion-item>
+      <ion-item-options>
+        <button ion-button color="secondary" expandable icon-start (tap)="copy(i,data.trackingNum)">
+          <ion-icon name="copy"></ion-icon>
+          Copy
         </button>
-    </ion-fab>
+        <button ion-button color="danger" expandable icon-start (tap)="delete(i,data.title)">
+          <ion-icon name="trash"></ion-icon>
+          Delete
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+
+  <ion-fab right bottom>
+    <button ion-fab color="secondary" (click)="addTracking()">
+      <ion-icon name="add"></ion-icon>
+    </button>
+  </ion-fab>
 
 </ion-content>

@@ -16,7 +16,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { IonicStorageModule } from '@ionic/storage';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { DataProvider } from '../providers/data/data';
-import { PosApiProvider } from './../providers/pos-api/pos-api';
+import { PosApiProvider } from '../providers/pos-api/pos-api';
 import { MyApp } from './app.component';
 import { Push } from '@ionic-native/push';
 
@@ -42,7 +42,7 @@ import { Push } from '@ionic-native/push';
   providers: [
     StatusBar,
     SplashScreen,
-    { provide: ErrorHandler, useClass: IonicErrorHandler },
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
     PosApiProvider,
     BarcodeScanner,
     SocialSharing,
@@ -58,4 +58,5 @@ import { Push } from '@ionic-native/push';
     Push
   ]
 })
-export class AppModule { }
+export class AppModule {
+}

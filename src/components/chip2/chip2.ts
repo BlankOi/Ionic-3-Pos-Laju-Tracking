@@ -11,7 +11,8 @@ export class Chip2Component {
   @Input('icon') icon: string;
   @Input('color-chip') color: string;
 
-  constructor() { }
+  constructor() {
+  }
 
 
 }

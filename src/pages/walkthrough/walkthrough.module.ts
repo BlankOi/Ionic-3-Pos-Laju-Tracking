@@ -10,4 +10,5 @@ import { WalkthroughPage } from './walkthrough';
     IonicPageModule.forChild(WalkthroughPage),
   ],
 })
-export class WalkthroughPageModule {}
+export class WalkthroughPageModule {
+}

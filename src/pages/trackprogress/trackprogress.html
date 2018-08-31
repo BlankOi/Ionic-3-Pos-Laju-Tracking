@@ -1,53 +1,54 @@
 <ion-header>
-    <ion-navbar color="primary" hideBackButton="true">
-        <ion-title>Delivery Status</ion-title>
-        <ion-buttons end>
-            <button ion-button icon-left color="light" (click)="takeScreenshot()">
-                <ion-icon name="images"></ion-icon>
-            </button>
-            <button ion-button icon-right large (click)="share()">
-              <ion-icon name="share" color="light"></ion-icon>
-            </button>
-        </ion-buttons>
-    </ion-navbar>
+  <ion-navbar color="primary" hideBackButton="true">
+    <ion-title>Delivery Status</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-left color="light" (click)="takeScreenshot()">
+        <ion-icon name="images"></ion-icon>
+      </button>
+      <button ion-button icon-right large (click)="share()">
+        <ion-icon name="share" color="light"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
 </ion-header>
 
 <ion-content parallax-header no-bounce class="bg2">
-    <div class="header-image">
-        <div class="row" text-center>
-        </div>
+  <div class="header-image">
+    <div class="row" text-center>
     </div>
-    <ion-list padding text-nowrap no-lines>
-        <ion-item class="trackDetail">
-            <ion-thumbnail item-left>
-                <img src="assets/lori.png">
-            </ion-thumbnail>
-            <h2>Title: <b>{{title}}</b></h2>
-            <p>Tracking Number</p>
-            <h2>{{trackNum}}</h2>
-            <!-- <h2>
-                    <ion-icon name="checkmark-circle" color="secondary"></ion-icon> {{lastItem}}</h2> -->
-        </ion-item>
-    </ion-list>
+  </div>
+  <ion-list padding text-nowrap no-lines>
+    <ion-item class="trackDetail">
+      <ion-thumbnail item-left>
+        <img src="assets/lori.png">
+      </ion-thumbnail>
+      <h2>Title: <b>{{title}}</b></h2>
+      <p>Tracking Number</p>
+      <h2>{{trackNum}}</h2>
+      <!-- <h2>
+              <ion-icon name="checkmark-circle" color="secondary"></ion-icon> {{lastItem}}</h2> -->
+    </ion-item>
+  </ion-list>
 
-    <div class="main-content">
-        <ion-card *ngFor="let pos of dataPos " class="overlap">
-            <ion-card-content>
-                <p color="primary" class="text-header"><b> {{pos.process|titlefix}}</b></p>
-                <ion-chip>
-                    <ion-icon name="pin"></ion-icon>
-                    <ion-label>{{pos.location}}</ion-label>
-                </ion-chip>
-                <div class="date">
-                    <span>{{pos.date}}</span>
-                </div>
-            </ion-card-content>
-        </ion-card>
-    </div>
-    <div class="spacer"></div>
-    <div class="home">
-        <button ion-button round block icon-start color="secondary" (click)="home()">
-            <ion-icon name="home"></ion-icon> Home
-        </button>
-    </div>
+  <div class="main-content">
+    <ion-card *ngFor="let pos of dataPos " class="overlap">
+      <ion-card-content>
+        <p color="primary" class="text-header"><b> {{pos.process|titlefix}}</b></p>
+        <ion-chip>
+          <ion-icon name="pin"></ion-icon>
+          <ion-label>{{pos.location}}</ion-label>
+        </ion-chip>
+        <div class="date">
+          <span>{{pos.date}}</span>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+  <div class="spacer"></div>
+  <div class="home">
+    <button ion-button round block icon-start color="secondary" (click)="home()">
+      <ion-icon name="home"></ion-icon>
+      Home
+    </button>
+  </div>
 </ion-content>

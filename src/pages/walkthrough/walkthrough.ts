@@ -17,7 +17,7 @@ export class WalkthroughPage {
   }
 
   navHome() {
-    this.navCtrl.setRoot('MainPage')
+    this.navCtrl.setRoot('MainPage');
     this.storage.set("intro-done", true);
   }
 

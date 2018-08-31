@@ -1,48 +1,48 @@
 <!-- <ion-nav [root]="rootPage"></ion-nav> -->
 <ion-menu #sidebar [content]="content" (ionOpen)="onMenuOpen($event)" (ionClose)="onMenuClose($event)">
-    <ion-content>
-        <ion-card text-center class="hide-card">
-            <img src="assets/org.jpg" class="custom-avatar" />
-            <br>
-            <h2>Pos Laju Tracking</h2>
-            <p class="footer-text">version 1.4.2 - 16 June 2018</p>
-        </ion-card>
-        <br>
-        <ion-list no-lines>
-            <ion-item menuClose (click)="sendEmail()">
-                <ion-icon name="mail" item-start color="darkblue"></ion-icon>
-                <h2>Contact Poslaju</h2>
-            </ion-item>
-            <ion-item menuClose (click)="share()">
-                <ion-icon name="share" item-start color="darkblue"></ion-icon>
-                <h2>Share App</h2>
-            </ion-item>
-            <ion-item menuClose (click)="rate()">
-                <ion-icon name="star" item-start color="darkblue"></ion-icon>
-                <h2>Rate 5 Stars</h2>
-            </ion-item>
-            <ion-item menuClose (click)="moreapp()">
-                <ion-icon name="apps" item-start color="darkblue"></ion-icon>
-                <h2>More App</h2>
-            </ion-item>
-            <ion-item menuClose (click)="presentModal()">
-                <ion-icon name="information-circle" item-start color="darkblue"></ion-icon>
-                <h2>About</h2>
-            </ion-item>
-            <ion-item menuClose (click)="sendEmailToMe()">
-                <ion-icon name="md-person" item-start color="darkblue"></ion-icon>
-                <h2>Contact Dev</h2>
-            </ion-item>
-        </ion-list>
-        <!-- <ion-footer>
-            <ion-toolbar color="primary">
-                    <p class="footer-text">version 1.2.2 - 15 Apr 2018</p>
-            </ion-toolbar>
-          </ion-footer> -->
-        <!-- <ion-card text-center class="footer">
-            <p>version 1.2.2 - 15 Apr 2018</p>
-        </ion-card> -->
-    </ion-content>
+  <ion-content>
+    <ion-card text-center class="hide-card">
+      <img src="assets/org.jpg" class="custom-avatar"/>
+      <br>
+      <h2>Pos Laju Tracking</h2>
+      <p class="footer-text">version 1.4.2 - 16 June 2018</p>
+    </ion-card>
+    <br>
+    <ion-list no-lines>
+      <ion-item menuClose (click)="sendEmail()">
+        <ion-icon name="mail" item-start color="darkblue"></ion-icon>
+        <h2>Contact Poslaju</h2>
+      </ion-item>
+      <ion-item menuClose (click)="share()">
+        <ion-icon name="share" item-start color="darkblue"></ion-icon>
+        <h2>Share App</h2>
+      </ion-item>
+      <ion-item menuClose (click)="rate()">
+        <ion-icon name="star" item-start color="darkblue"></ion-icon>
+        <h2>Rate 5 Stars</h2>
+      </ion-item>
+      <ion-item menuClose (click)="moreapp()">
+        <ion-icon name="apps" item-start color="darkblue"></ion-icon>
+        <h2>More App</h2>
+      </ion-item>
+      <ion-item menuClose (click)="presentModal()">
+        <ion-icon name="information-circle" item-start color="darkblue"></ion-icon>
+        <h2>About</h2>
+      </ion-item>
+      <ion-item menuClose (click)="sendEmailToMe()">
+        <ion-icon name="md-person" item-start color="darkblue"></ion-icon>
+        <h2>Contact Dev</h2>
+      </ion-item>
+    </ion-list>
+    <!-- <ion-footer>
+        <ion-toolbar color="primary">
+                <p class="footer-text">version 1.2.2 - 15 Apr 2018</p>
+        </ion-toolbar>
+      </ion-footer> -->
+    <!-- <ion-card text-center class="footer">
+        <p>version 1.2.2 - 15 Apr 2018</p>
+    </ion-card> -->
+  </ion-content>
 </ion-menu>
 
 <ion-nav #myNav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>

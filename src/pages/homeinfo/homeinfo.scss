@@ -1,44 +1,42 @@
 page-homeinfo {
-    .wrap {
-        height: 100%;
+  .wrap {
+    height: 100%;
+  }
+  ion-card-content {
+    padding-top: .1em !important;
+  }
+  .slide2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    img {
+      width: 65%;
+      height: auto;
+      margin: 0 auto 3em;
     }
-    ion-card-content {
-        padding-top: .1em !important;
+    h1 {
+      font-weight: bold;
+      margin-bottom: .5em;
     }
-    .slide2 {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        img {
-            margin: 0 auto;
-            width: 65%;
-            height: auto;
-            margin-bottom: 3em;
-        }
-        h1 {
-            font-weight: bold;
-            margin-bottom: .5em;
-        }
-        p {
-            color: map-get($colors, primary);
-        }
+    p {
+      color: map-get($colors, primary);
     }
-    .slide3 {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        img {
-            margin: 0 auto;
-            width: 65%;
-            height: auto;
-            margin-bottom: 3em;
-        }
-        h1 {
-            font-weight: bold;
-            margin-bottom: .5em;
-        }
-        p {
-            color: map-get($colors, primary);
-        }
+  }
+  .slide3 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    img {
+      width: 65%;
+      height: auto;
+      margin: 0 auto 3em;
     }
+    h1 {
+      font-weight: bold;
+      margin-bottom: .5em;
+    }
+    p {
+      color: map-get($colors, primary);
+    }
+  }
 }

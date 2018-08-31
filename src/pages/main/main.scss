@@ -1,50 +1,50 @@
-    page-main {
-        .nodata {
-            z-index: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 90%;
-            img {
-                width: 20%;
-                margin: auto;
-            }
-            p {
-                color: map-get($colors, light);
-                padding: 0 2em;
-            }
-            h2 {
-                color: map-get($colors, light);
-            }
-        }
-        ion-item-sliding {
-            background: map-get($colors, lite-dark);
-            position: relative;
-            display: block;
-            overflow: hidden;
-            width: 100%;
-            margin-top: .5em;
-            box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
-            border-radius: 7px;
-        }
-        .title {
-            padding-top: .1em;
-        }
-        .footer-img {
-            bottom: 0;
-            position: fixed;
-        }
-        .text-input-md {
-            margin: 0;
-            padding: 0;
-            width: calc(100% - 8px - 8px);
-        }
-        .content.has-refresher .scroll-content,
-        .content.has-refresher .fixed-content {
-            border-top: 0;
-        }
-
-        ion-reorder{
-            color: map-get($colors, danger);
-        }
+page-main {
+  .nodata {
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 90%;
+    img {
+      width: 20%;
+      margin: auto;
     }
+    p {
+      color: map-get($colors, light);
+      padding: 0 2em;
+    }
+    h2 {
+      color: map-get($colors, light);
+    }
+  }
+  ion-item-sliding {
+    background: map-get($colors, lite-dark);
+    position: relative;
+    display: block;
+    overflow: hidden;
+    width: 100%;
+    margin-top: .5em;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+    border-radius: 7px;
+  }
+  .title {
+    padding-top: .1em;
+  }
+  .footer-img {
+    bottom: 0;
+    position: fixed;
+  }
+  .text-input-md {
+    margin: 0;
+    padding: 0;
+    width: calc(100% - 8px - 8px);
+  }
+  .content.has-refresher .scroll-content,
+  .content.has-refresher .fixed-content {
+    border-top: 0;
+  }
+
+  ion-reorder {
+    color: map-get($colors, danger);
+  }
+}

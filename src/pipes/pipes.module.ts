@@ -1,8 +1,10 @@
 import { NgModule } from '@angular/core';
 import { TitlefixPipe } from './titlefix/titlefix';
+
 @NgModule({
-	declarations: [TitlefixPipe],
-	imports: [],
-	exports: [TitlefixPipe]
+  declarations: [TitlefixPipe],
+  imports: [],
+  exports: [TitlefixPipe]
 })
-export class PipesModule {}
+export class PipesModule {
+}

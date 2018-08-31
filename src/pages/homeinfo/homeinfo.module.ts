@@ -10,4 +10,5 @@ import { HomeinfoPage } from './homeinfo';
     IonicPageModule.forChild(HomeinfoPage),
   ],
 })
-export class HomeinfoPageModule {}
+export class HomeinfoPageModule {
+}

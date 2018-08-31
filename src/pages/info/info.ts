@@ -18,7 +18,7 @@ export class InfoPage {
   }
 
   dismiss() {
-    this.haptic.acoustic()
+    this.haptic.acoustic();
     this.viewCtrl.dismiss();
   }
 

@@ -9,7 +9,7 @@ import { SocialSharing } from '@ionic-native/social-sharing';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { Storage } from "@ionic/storage";
-import { App, Events, Platform, AlertController } from 'ionic-angular';
+import { AlertController, App, Events, Platform } from 'ionic-angular';
 import { KEYS } from "../private/constant";
 import { DataProvider } from '../providers/data/data';
 import { Push, PushObject, PushOptions } from '@ionic-native/push';
@@ -105,13 +105,14 @@ export class MyApp {
         id: KEYS.ADMOB,
         isTesting: false,
         autoShow: true
-      }
+      };
       this.adMobFree.banner.config(bannerConfig);
       await this.adMobFree.banner.prepare();
     }
     catch (e) {
     }
   }
+
   //ads end
 
   onMenuOpen(event) {
@@ -123,37 +124,37 @@ export class MyApp {
   }
 
   presentModal() {
-    this.haptic.acoustic()
+    this.haptic.acoustic();
     this.app.getActiveNav().push('InfoPage');
   }
 
   rate() {
     //rate App
-    this.haptic.acoustic()
+    this.haptic.acoustic();
     this.appRate.preferences.storeAppURL = {
       android: 'market://details?id=my.mazlan.poslajutracking'
-    }
+    };
     this.appRate.promptForRating(true);
     //rate end
   }
 
   moreapp() {
-    this.haptic.acoustic()
+    this.haptic.acoustic();
     this.iab.create('https://play.google.com/store/apps/dev?id=7340219747104934293&hl=en', '_system')
   }
 
   portfolio() {
-    this.haptic.acoustic()
+    this.haptic.acoustic();
     this.iab.create('https://play.google.com/store/apps/details?id=my.mazlan.myresume', '_system')
   }
 
   sendEmail() {
-    this.haptic.acoustic()
+    this.haptic.acoustic();
     let alert = this.alertCtrl.create();
     alert.setTitle('Please select your item?');
 
     this.dataProvider.getData.subscribe((element) => {
-      console.log('element', element)
+      console.log('element', element);
       if (element.length != 0) {
         element.forEach(item => {
           alert.addInput({
@@ -186,7 +187,7 @@ export class MyApp {
         <li>&#8226; <b>${item}</b></li>
         </ul>
       `).join('')}
-    `
+    `;
     this.emailComposer.addAlias('gmail', 'com.google.android.gm');
     this.emailComposer.open({
       app: 'gmail',
@@ -206,7 +207,7 @@ export class MyApp {
   }
 
   sendEmailToMe() {
-    this.haptic.acoustic()
+    this.haptic.acoustic();
     this.emailComposer.addAlias('gmail', 'com.google.android.gm');
     this.emailComposer.open({
       app: 'gmail',
@@ -222,8 +223,8 @@ export class MyApp {
   }
 
   share() {
-    this.haptic.acoustic()
-    var options = {
+    this.haptic.acoustic();
+    let options = {
       message: 'Pos Laju Tracking is a free app to help users to track Pos Laju Parcel. Download now at Google Play Store',
       subject: 'Pos Laju Tracking App',
       url: 'https://play.google.com/store/apps/details?id=my.mazlan.poslajutracking',

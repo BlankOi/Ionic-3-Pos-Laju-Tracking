@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
-import { IonicPageModule } from 'ionic-angular';
+import { IonicModule, IonicPageModule } from 'ionic-angular';
 import { MainPage } from './main';
 import { ComponentsModule } from '../../components/components.module';
-import { IonicModule } from 'ionic-angular';
 
 @NgModule({
   declarations: [
@@ -14,4 +13,5 @@ import { IonicModule } from 'ionic-angular';
     ComponentsModule
   ],
 })
-export class MainPageModule {}
+export class MainPageModule {
+}

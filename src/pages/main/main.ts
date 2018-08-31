@@ -1,7 +1,7 @@
-import {Component} from '@angular/core';
-import {Clipboard} from '@ionic-native/clipboard';
-import {DeviceFeedback} from '@ionic-native/device-feedback';
-import {Storage} from "@ionic/storage";
+import { Component } from '@angular/core';
+import { Clipboard } from '@ionic-native/clipboard';
+import { DeviceFeedback } from '@ionic-native/device-feedback';
+import { Storage } from "@ionic/storage";
 import {
   AlertController,
   Events,
@@ -11,8 +11,8 @@ import {
   NavController,
   ToastController
 } from 'ionic-angular';
-import {DataProvider} from '../../providers/data/data';
-import {PosApiProvider} from '../../providers/pos-api/pos-api';
+import { DataProvider } from '../../providers/data/data';
+import { PosApiProvider } from '../../providers/pos-api/pos-api';
 import 'rxjs/add/operator/timeout';
 
 @IonicPage()
@@ -307,7 +307,7 @@ export class MainPage {
       .timeout(10000)
       .subscribe(result => {
           // nak amik data je
-          for (var key in result.data) {
+          for (let key in result.data) {
             if (result.data.hasOwnProperty(key)) {
               this.posData.push(result.data[key]);
             }

@@ -3,7 +3,7 @@ import { DeviceFeedback } from '@ionic-native/device-feedback';
 import { Screenshot } from "@ionic-native/screenshot";
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { Storage } from '@ionic/storage';
-import { IonicPage, NavController, NavOptions, NavParams, Platform, LoadingController } from 'ionic-angular';
+import { IonicPage, LoadingController, NavController, NavOptions, NavParams, Platform } from 'ionic-angular';
 
 @IonicPage()
 @Component({
@@ -32,14 +32,15 @@ export class TrackprogressPage {
     public haptic: DeviceFeedback,
     public screenshot: Screenshot,
     public loadingCtrl: LoadingController
-  ) { }
+  ) {
+  }
 
   ionViewDidLoad() {
     if (this.navParams.get('dataObj') != undefined) {
       this.title = this.navParams.get('dataObj').title;
       this.trackNum = this.navParams.get('dataObj').trackingNum;
       this.dataPos = this.navParams.get('dataObj').data;
-      this.lastItem = this.navParams.get('dataObj').data[0].process.replace(/<[\/]{0,1}(B|b)[^><]*>/g, "");;
+      this.lastItem = this.navParams.get('dataObj').data[0].process.replace(/<[\/]{0,1}(B|b)[^><]*>/g, "");
       this.lastDate = this.navParams.get('dataObj').data[0].date;
       this.lastLoc = this.navParams.get('dataObj').data[0].location;
       console.log(this.dataPos[0]);
@@ -53,14 +54,14 @@ export class TrackprogressPage {
   }
 
   home() {
-    this.haptic.acoustic()
+    this.haptic.acoustic();
     const opts: NavOptions = {
       animate: true,
       animation: 'slides',
       direction: 'back',
       easing: 'ease-in-out',
       // duration: 200
-    }
+    };
     this.loader = this.loadingCtrl.create({
       spinner: 'dots',
     });
@@ -72,7 +73,7 @@ export class TrackprogressPage {
 
   share() {
     this.haptic.acoustic();
-    var options = {
+    let options = {
       message: 'Latest Information.\n\nTracking Number: ' + this.trackNum + '\nCurrent Status:' + this.lastItem + '\nLocation: ' + this.lastLoc + '\nDate: ' + this.lastDate + '\n\nGenerated using Pos Laju Tracking App, download on Google Play Store now.',
       subject: this.lastItem,
       url: 'https://play.google.com/store/apps/details?id=my.mazlan.poslajutracking',

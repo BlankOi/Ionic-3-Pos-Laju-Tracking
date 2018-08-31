@@ -1,61 +1,61 @@
 page-walkthrough {
-    .slide1 {
-        background-color: map-get($colors, primary);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        img {
-            width: 40%;
-            height: auto;
-        }
-        h1 {
-            margin-bottom: 2em;
-            font-weight: bold;
-            color: map-get($colors, light);
-        }
-        p {
-            margin-top: 3em;
-            color: map-get($colors, light);
-        }
+  .slide1 {
+    background-color: map-get($colors, primary);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    img {
+      width: 40%;
+      height: auto;
     }
-    .slide2 {
-        background-color: map-get($colors, secondary);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        img {
-            width: 50%;
-            height: auto;
-        }
-        h1 {
-            font-weight: bold;
-            color: map-get($colors, light);
-        }
-        p {
-            color: map-get($colors, light);
-        }
+    h1 {
+      margin-bottom: 2em;
+      font-weight: bold;
+      color: map-get($colors, light);
     }
-    .slide3 {
-        background-color: map-get($colors, tertiary);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        img {
-            width: 50%;
-            height: auto;
-            margin-bottom: 1em;
-        }
-        h1 {
-            font-weight: bold;
-            color: map-get($colors, light);
-        }
-        p {
-            color: map-get($colors, light);
-        }
-        button {
-            display: flex;
-            align-items: center;
-            margin: 0 auto;
-        }
+    p {
+      margin-top: 3em;
+      color: map-get($colors, light);
     }
+  }
+  .slide2 {
+    background-color: map-get($colors, secondary);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    img {
+      width: 50%;
+      height: auto;
+    }
+    h1 {
+      font-weight: bold;
+      color: map-get($colors, light);
+    }
+    p {
+      color: map-get($colors, light);
+    }
+  }
+  .slide3 {
+    background-color: map-get($colors, tertiary);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    img {
+      width: 50%;
+      height: auto;
+      margin-bottom: 1em;
+    }
+    h1 {
+      font-weight: bold;
+      color: map-get($colors, light);
+    }
+    p {
+      color: map-get($colors, light);
+    }
+    button {
+      display: flex;
+      align-items: center;
+      margin: 0 auto;
+    }
+  }
 }

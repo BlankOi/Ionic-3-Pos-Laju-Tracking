@@ -1,54 +1,53 @@
-    page-home {
-        .header-img {
-            background-image: url(../asset/orang.png);
-            background-size: cover;
-            background-position: center;
-            height: 50vw;
-            position: relative;
-            margin-top: .8em;
-            padding: .8em;
-        }
-        .header-content {
-            position: absolute;
-            z-index: 1;
-            padding: .5em 1em;
-            color: map-get($colors, light);
-        }
-        .footer-img {
-            bottom: 0;
-            position: fixed;
-        }
-        .item-md {
-            padding-left: 0;
-            font-size: 2rem;
-            font-weight: normal;
-            text-transform: none;
-            color: #000;
-            background-color: map-get($colors, light);
-            -webkit-transition: background-color 300ms cubic-bezier(0.4, 0, 0.2, 1);
-            transition: background-color 300ms cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .item-md.item-block .item-inner {
-            padding-right: 2em;
-            padding-left: 2em;
-            border-bottom: 1px solid #dedede;
-        }
-        .item-md .item-button {
-            padding: 0;
-            height: 2em;
-            font-size: 2rem;
-        }
-        .title-place {
-            margin-top: .5em;
-            margin-bottom: .1em;
-            font-size: 1em;
-        }
-        .text-input-md {
-            margin: 0;
-            padding: 0;
-            width: calc(100% - 8px - 8px);
-        }
-        ion-input {
-            text-transform: uppercase;
-        }
-    }
+page-home {
+  .header-img {
+    background-size: cover;
+    background: url(../asset/orang.png) center;
+    height: 50vw;
+    position: relative;
+    margin-top: .8em;
+    padding: .8em;
+  }
+  .header-content {
+    position: absolute;
+    z-index: 1;
+    padding: .5em 1em;
+    color: map-get($colors, light);
+  }
+  .footer-img {
+    bottom: 0;
+    position: fixed;
+  }
+  .item-md {
+    padding-left: 0;
+    font-size: 2rem;
+    font-weight: normal;
+    text-transform: none;
+    color: #000;
+    background-color: map-get($colors, light);
+    -webkit-transition: background-color 300ms cubic-bezier(0.4, 0, 0.2, 1);
+    transition: background-color 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .item-md.item-block .item-inner {
+    padding-right: 2em;
+    padding-left: 2em;
+    border-bottom: 1px solid #dedede;
+  }
+  .item-md .item-button {
+    padding: 0;
+    height: 2em;
+    font-size: 2rem;
+  }
+  .title-place {
+    margin-top: .5em;
+    margin-bottom: .1em;
+    font-size: 1em;
+  }
+  .text-input-md {
+    margin: 0;
+    padding: 0;
+    width: calc(100% - 8px - 8px);
+  }
+  ion-input {
+    text-transform: uppercase;
+  }
+}

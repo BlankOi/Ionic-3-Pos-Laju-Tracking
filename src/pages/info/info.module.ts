@@ -10,4 +10,5 @@ import { InfoPage } from './info';
     IonicPageModule.forChild(InfoPage),
   ],
 })
-export class InfoPageModule {}
+export class InfoPageModule {
+}

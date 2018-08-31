@@ -10,15 +10,11 @@ import 'rxjs/add/observable/fromPromise';
 export class DataProvider {
   data = [];
   observableData: BehaviorSubject<any[]>;
-
-  constructor(public http: Http, public storage: Storage) {
-    // this.storage.clear();
-    this.getData
-      // this.storage.get('tracking')
-      .subscribe((result) => {
-        this.data = result;
-      })
-  }
+  getData: Observable<any> = Observable.fromPromise(this.storage.get('tracking').then(data => {
+    //maybe some processing logic like JSON.parse(token)
+    console.log('observble data:', data);
+    return data;
+  }));
 
   // getData() {
   //   return this.storage.get('tracking')
@@ -29,23 +25,26 @@ export class DataProvider {
   // console.log(' this.observableData', this.observableData)
   // }
 
-  getData: Observable<any> = Observable.fromPromise(this.storage.get('tracking').then(data => {
-    //maybe some processing logic like JSON.parse(token)
-    console.log('observble data:', data);
-    return data;
-  }));
+  constructor(public http: Http, public storage: Storage) {
+    // this.storage.clear();
+    this.getData
+    // this.storage.get('tracking')
+      .subscribe((result) => {
+        this.data = result;
+      })
+  }
 
   save(dataObj) {
     // let newData = dataObj;
     console.log('current dataObj=>', dataObj);
     if (!this.data) {
-    console.log('this.data',this.data);
-    
+      console.log('this.data', this.data);
+
       this.data = [dataObj];
       this.storage.set('tracking', this.data);
     } else {
-    console.log('else this.data',this.data);
-    
+      console.log('else this.data', this.data);
+
       this.data.push(dataObj);
       this.storage.set('tracking', this.data);
     }
