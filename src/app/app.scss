@@ -13,61 +13,70 @@
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
 @font-face {
-    font-family: LatoRegular;
-    src: url('../assets/fonts/Lato-Regular.ttf.woff');
+  font-family: LatoRegular;
+  src: url('../assets/fonts/Lato-Regular.ttf.woff');
 }
 
+*::-webkit-scrollbar {
+  display: none;
+}
+
+//body{
+//  -webkit-user-select: text;
+//  user-select: text;
+//}
+
 * {
-    font-family: LatoRegular;
-    font-weight: normal;
-    font-style: normal;
+  font-family: LatoRegular;
+  font-weight: normal;
+  font-style: normal;
 }
 
 .bg {
-    // background: #FAF9FF;
-    background: map-get($colors, bg);
+  // background: #FAF9FF;
+  background: map-get($colors, bg);
 }
 
 .bg2 {
-    background: map-get($colors, primary);
+  background: map-get($colors, primary);
 }
 
 .hide-card {
-    -webkit-box-shadow: none !important;
-    border-radius: 0px;
-    width: 100%;
-    margin: 0;
-    padding-top: 1.4em;
-    padding-bottom: 1.4em;
-    // height: 20vh;
-    background: url('../assets/pos.jpg');
-    background-size: cover;
-    background-position: center;
-    background: map-get($colors, primary);
-    h2 {
-        color: map-get($colors, light) !important;
-        margin-top: 1.5em !important;
-        font-weight: bold;
-    }
-    p {
-        color: map-get($colors, light) !important;
-    }
+  -webkit-box-shadow: none !important;
+  border-radius: 0px;
+  width: 100%;
+  margin: 0;
+  padding-top: 1.4em;
+  padding-bottom: 1.4em;
+  // height: 20vh;
+  background: url('../assets/pos.jpg');
+  background-size: cover;
+  background-position: center;
+  background: map-get($colors, primary);
+  h2 {
+    color: map-get($colors, light) !important;
+    margin-top: 1.5em !important;
+    font-weight: bold;
+  }
+  p {
+    color: map-get($colors, light) !important;
+  }
 }
 
-.footer-text{
-    margin-top: 1em !important;
-    font-size: 0.7em !important;
-    color: map-get($colors, light);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.footer-text {
+  margin-top: 1em !important;
+  font-size: 0.7em !important;
+  color: map-get($colors, light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .custom-avatar {
-    height: 6em;
-    width: 6em;
-    border-radius: 50%;
-    display: inline-block;
-    margin-left: auto;
-    margin-right: auto;
+  height: 6em;
+  width: 6em;
+  border-radius: 50%;
+  display: inline-block;
+  margin-left: auto;
+  margin-right: auto;
 }
